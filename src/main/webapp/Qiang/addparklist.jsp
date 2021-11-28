@@ -251,14 +251,14 @@
                 <li>
                     <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
-                <li class="">
+                <li class="open">
                     <a class="active-menu" href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="active-menu" href="<%=path%>/Qiang/parklist.jsp">销售车位管理</a>
+                            <a href="<%=path%>/Qiang/parklist.jsp">销售车位管理</a>
                         </li>
                         <li>
-                            <a href="<%=path%>/Qiang/addparklist.jsp">添加销售车位</a>
+                            <a class="active-menu" href="<%=path%>/Qiang/addparklist.jsp">添加销售车位</a>
                         </li>
                     </ul>
                 </li>

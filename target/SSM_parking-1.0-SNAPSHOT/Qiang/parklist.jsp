@@ -251,7 +251,7 @@
                 <li>
                     <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
-                <li class="">
+                <li class="fa-list-ol">
                     <a class="active-menu" href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
