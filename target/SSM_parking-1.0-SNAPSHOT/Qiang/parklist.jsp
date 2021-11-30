@@ -251,7 +251,7 @@
                 <li>
                     <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
-                <li class="fa-list-ol">
+                <li class="">
                     <a class="active-menu" href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -263,10 +263,18 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="chart.html"><i class="fa fa-bar-chart-o"></i>业主管理</a>
+                    <a href="<%=path%>/Qiang/userlist.jsp"><i class="fa fa-bar-chart-o"></i>业主管理</a>
                 </li>
                 <li>
-                    <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
+                    <a href="#"><i class="fa fa-desktop"></i>订单管理<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<%=path%>/Qiang/orderlist.jsp">进行订单</a>
+                        </li>
+                        <li>
+                            <a href="<%=path%>/Qiang/historyorderlsit.jsp">历史订单</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
@@ -318,12 +326,83 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-header">
-                        Empty Page <small>Create new page.</small>
+                        销售车位信息管理
                     </h1>
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <!--    Context Classes  -->
+                                <div class="panel panel-default">
+                                    <div class="alert alert-success">
+                                        <strong>正在出售</strong>
+                                    </div>
+                                    <div class="col-xs-12">
+                                    <form>
+                                        <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-1">
+                                            <button  class="btn btn-success">上一页</button>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-1">
+                                            <button  class="btn btn-success">下一页</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                    <div class="col-xs-12">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Username</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr class="success">
+                                                    <td>1</td>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                    <td>@mdo</td>
+                                                </tr>
+                                                <tr class="info">
+                                                    <td>2</td>
+                                                    <td>Jacob</td>
+                                                    <td>Thornton</td>
+                                                    <td>@fat</td>
+                                                </tr>
+                                                <tr class="warning">
+                                                    <td>3</td>
+                                                    <td>Larry</td>
+                                                    <td>the Bird</td>
+                                                    <td>@twitter</td>
+                                                </tr>
+                                                <tr class="danger">
+                                                    <td>4</td>
+                                                    <td>John</td>
+                                                    <td>Smith</td>
+                                                    <td>@jsmith</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <!--  end  Context Classes  -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- /. ROW  -->
-            <footer><p>Copyright &copy; 2016.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p></footer>
         </div>
         <!-- /. PAGE INNER  -->
     </div>
