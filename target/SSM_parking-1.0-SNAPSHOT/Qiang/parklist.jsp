@@ -6,21 +6,21 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% String path=request.getContextPath(); %>
+<% String path = request.getContextPath(); %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title></title>
     <!-- Bootstrap Styles-->
-    <link href="<%=path%>/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="<%=path%>/assets/css/bootstrap.css" rel="stylesheet"/>
     <!-- FontAwesome Styles-->
-    <link href="<%=path%>/assets/css/font-awesome.css" rel="stylesheet" />
+    <link href="<%=path%>/assets/css/font-awesome.css" rel="stylesheet"/>
     <!-- Custom Styles-->
-    <link href="<%=path%>/assets/css/custom-styles.css" rel="stylesheet" />
+    <link href="<%=path%>/assets/css/custom-styles.css" rel="stylesheet"/>
     <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
 <body>
 <div id="wrapper">
@@ -32,7 +32,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%=path%>/Qiang/index.jsp"><i class="fa fa-comments"></i> <strong>开发商管理后台</strong></a>
+            <a class="navbar-brand" href="<%=path%>/Qiang/index.jsp"><i class="fa fa-comments"></i>
+                <strong>开发商管理后台</strong></a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -99,7 +100,8 @@
                                     <span class="pull-right text-muted">60% Complete</span>
                                 </p>
                                 <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                         <span class="sr-only">60% Complete (success)</span>
                                     </div>
                                 </div>
@@ -115,7 +117,8 @@
                                     <span class="pull-right text-muted">28% Complete</span>
                                 </p>
                                 <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="28"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 28%">
                                         <span class="sr-only">28% Complete</span>
                                     </div>
                                 </div>
@@ -131,7 +134,8 @@
                                     <span class="pull-right text-muted">60% Complete</span>
                                 </p>
                                 <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                         <span class="sr-only">60% Complete (warning)</span>
                                     </div>
                                 </div>
@@ -147,7 +151,8 @@
                                     <span class="pull-right text-muted">85% Complete</span>
                                 </p>
                                 <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 85%">
                                         <span class="sr-only">85% Complete (danger)</span>
                                     </div>
                                 </div>
@@ -252,7 +257,8 @@
                     <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
                 <li class="">
-                    <a class="active-menu" href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
+                    <a class="active-menu" href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span
+                            class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a class="active-menu" href="<%=path%>/Qiang/parklist.jsp">销售车位管理</a>
@@ -321,7 +327,7 @@
 
     </nav>
     <!-- /. NAV SIDE  -->
-    <div id="page-wrapper" >
+    <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
@@ -337,63 +343,64 @@
                                         <strong>正在出售</strong>
                                     </div>
                                     <div class="col-xs-12">
-                                    <form>
-                                        <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
-                                            <input type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                        <form>
+                                            <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i
+                                                        class="fa fa-search"></i>
                                                 </button>
                                             </span>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-1">
-                                            <button  class="btn btn-success">上一页</button>
-                                        </div>
-                                        <div class="form-group col-xs-12 col-sm-1">
-                                            <button  class="btn btn-success">下一页</button>
-                                        </div>
-                                    </form>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-1">
+                                                <button class="btn btn-success">上一页</button>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-1">
+                                                <button class="btn btn-success">下一页</button>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <div class="table-responsive">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Username</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="success">
-                                                    <td>1</td>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
-                                                </tr>
-                                                <tr class="info">
-                                                    <td>2</td>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr class="warning">
-                                                    <td>3</td>
-                                                    <td>Larry</td>
-                                                    <td>the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-                                                <tr class="danger">
-                                                    <td>4</td>
-                                                    <td>John</td>
-                                                    <td>Smith</td>
-                                                    <td>@jsmith</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Username</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr class="success">
+                                                        <td>1</td>
+                                                        <td>Mark</td>
+                                                        <td>Otto</td>
+                                                        <td>@mdo</td>
+                                                    </tr>
+                                                    <tr class="info">
+                                                        <td>2</td>
+                                                        <td>Jacob</td>
+                                                        <td>Thornton</td>
+                                                        <td>@fat</td>
+                                                    </tr>
+                                                    <tr class="warning">
+                                                        <td>3</td>
+                                                        <td>Larry</td>
+                                                        <td>the Bird</td>
+                                                        <td>@twitter</td>
+                                                    </tr>
+                                                    <tr class="danger">
+                                                        <td>4</td>
+                                                        <td>John</td>
+                                                        <td>Smith</td>
+                                                        <td>@jsmith</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                                 <!--  end  Context Classes  -->

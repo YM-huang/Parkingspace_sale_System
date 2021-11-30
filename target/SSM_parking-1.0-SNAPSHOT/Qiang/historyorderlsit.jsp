@@ -268,7 +268,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a  href="<%=path%>/Qiang/userlist.jsp"><i class="fa fa-bar-chart-o"></i>业主管理</a>
+                    <a href="<%=path%>/Qiang/userlist.jsp"><i class="fa fa-bar-chart-o"></i>业主管理</a>
                 </li>
                 <li>
                     <a class="active-menu" href="#"><i class="fa fa-desktop"></i>订单管理<span class="fa arrow"></span></a>
@@ -346,7 +346,8 @@
                                             <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
                                                 <input type="text" class="form-control">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                    <button class="btn btn-default" type="button"><i
+                                                            class="fa fa-search"></i>
                                                     </button>
                                                 </span>
                                             </div>
