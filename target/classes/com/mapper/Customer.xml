@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//Mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="org.mybatis.spring">
     <select id="getCustomerByID" resultType="com.bean.Customer" parameterType="int">
         SELECT * from customer where customerID = #{id}

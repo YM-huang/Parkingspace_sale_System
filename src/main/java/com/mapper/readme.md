@@ -1,6 +1,7 @@
 ## 映射文件描述
 
 - Developer.xml开发商用来处理的数据库的映射文件
+- Developer与xml对应的dao接口
 
 
 ##### xml模板

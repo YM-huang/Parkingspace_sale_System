@@ -34,26 +34,26 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.spri
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
         <!-- 扫描sql配置文件:mapper需要的xml文件 -->
         <!-- 这是配置xml扫描的，当只要用注解不用xml，可以不要下面这个配置-->
-        <property name="mapperLocations" value="classpath:com/mapper/*.xml" />
+        <property name="mapperLocations" value="classpath:com/mapper/*.xml"/>
     </bean>
 
 
     <!--配置sqlSessionTemplate：通过带参数的构造方法创建对象 -->
     <!--    如果只要使用注解,不需要配置这个，这个是给xml使用的-->
-    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-        <!-- 以sqlSessionFactory为参数传入构造函数中 -->
-        <constructor-arg ref="SqlSessionFactory" />
-    </bean>
+<!--    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">-->
+<!--        &lt;!&ndash; 以sqlSessionFactory为参数传入构造函数中 &ndash;&gt;-->
+<!--        <constructor-arg ref="SqlSessionFactory" />-->
+<!--    </bean>-->
 
-    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-        <!-- 给 SqlSessionTemplate 的构造函数赋值-->
-        <constructor-arg index="0" ref="SqlSessionFactory" />
-    </bean>
+<!--    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">-->
+<!--        &lt;!&ndash; 给 SqlSessionTemplate 的构造函数赋值&ndash;&gt;-->
+<!--        <constructor-arg index="0" ref="SqlSessionFactory" />-->
+<!--    </bean>-->
 
 <!--    &lt;!&ndash; 配置 Spring 的 org.springframework.jdbc.core.JdbcTemplate &ndash;&gt;-->
-<!--    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
-<!--        <property name="dataSource" ref="dataSource"></property>-->
-<!--    </bean>-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
 
     <!-- 扫描basePackage下所有以@MyBatisDao注解的接口 -->
     <!-- 这是扫描注解的，当只使用xml，不要注解的话，可以把整个MapperScannerConfigurer删掉-->

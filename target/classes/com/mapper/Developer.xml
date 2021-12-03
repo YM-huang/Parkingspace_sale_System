@@ -3,8 +3,8 @@
         PUBLIC "-//Mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.mybatis.spring">
-    <select id="getDeveloper" resultType="com.bean.Developer_administrator" parameterType="java.util.HashMap">
+<mapper namespace="com.mapper.Developer">
+    <select id="login" resultType="com.bean.Developer_administrator" parameterType="java.util.HashMap">
         SELECT * from developer_administrator where developer_id = #{id} and password = #{pwd}
     </select>
 </mapper>
