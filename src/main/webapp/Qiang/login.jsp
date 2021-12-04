@@ -23,22 +23,22 @@
 <div class="container switch">
     <!-- 注册页面 -->
     <div class="container-form container-signup">
-        <form action="" class="form">
-            <h2 class="form-title">Sign Up</h2>
+        <form action="" class="form" style="background: #fbf2e3">
+            <h2 class="form-title">注册</h2>
             <input type="text" placeholder="User" class="input">
             <input type="email" placeholder="Email" class="input">
             <input type="password" placeholder="Password" class="input">
-            <button class="submit">sign up</button>
+            <button class="submit">注册</button>
         </form>
     </div>
     <!-- 登录页面 -->
     <div class="container-form container-signin">
-        <form action="javascript:void(0);" class="form">
-            <h2 class="form-title">Sign In</h2>
+        <form action="javascript:void(0);" class="form" style="background: #fbf2e3">
+            <h2 class="form-title">登录</h2>
             <input type="text" placeholder="User" class="input">
             <input type="password" placeholder="Password" class="input">
             <a href="javascript:void(0);">forgot your password?</a>
-            <button class="submit">sign in</button>
+            <button class="submit">登录</button>
         </form>
     </div>
     <!-- 覆盖层 -->

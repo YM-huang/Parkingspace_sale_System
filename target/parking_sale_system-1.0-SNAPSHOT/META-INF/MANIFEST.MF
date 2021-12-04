@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+<<<<<<< HEAD
+Built-By: 李勇达
+Build-Jdk: Azul Zulu Community™ version 15.0.5
+=======
+Built-By: 95243
+Build-Jdk: version 15
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
+

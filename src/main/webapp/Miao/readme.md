@@ -1,1 +1,2 @@
-## 这时妙妙的前端网页文件
+##bean类
+customer:用户的javabean
