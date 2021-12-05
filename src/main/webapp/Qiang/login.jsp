@@ -33,10 +33,10 @@
     </div>
     <!-- 登录页面 -->
     <div class="container-form container-signin">
-        <form action="javascript:void(0);" class="form" style="background: #fbf2e3">
+        <form class="form" style="background: #fbf2e3" action="${pageContext.request.contextPath}/developer/login" method="post">
             <h2 class="form-title">登录</h2>
-            <input type="text" placeholder="User" class="input">
-            <input type="password" placeholder="Password" class="input">
+            <input type="text" placeholder="User" class="input" name="username">
+            <input type="password" placeholder="Password" class="input" name="password">
             <a href="javascript:void(0);">forgot your password?</a>
             <button class="submit">登录</button>
         </form>

@@ -35,7 +35,7 @@ public class UserController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, Model model) {
-        User user = userService.selectUserByUserName(username);
+        User user = userService.userLogin(username,password);
         if (user != null) {
             if (user.getUserPassword().equals(password)) {
                 System.out.println("登录成功");
@@ -43,17 +43,17 @@ public class UserController {
                 session.setAttribute("username", username);
 
                 model.addAttribute("state","登录成功");
-                return "loginSuccess";
+                return "Miao/loginSuccess";
             } else {
                 System.out.println("用户名或密码错误");
                 model.addAttribute("failure", "用户名或密码错误！");
-                return "loginError";
+                return "Miao/loginError";
             }
         } else {
             System.out.println("用名不存在");
             model.addAttribute("state", "failure");
             model.addAttribute("message", "该用户不存在");
-            return "loginError";
+            return "Miao/loginError";
         }
     }
 

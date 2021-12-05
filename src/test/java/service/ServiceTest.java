@@ -1,8 +1,7 @@
 package service;
 
 import com.bean.Administrators;
-import com.bean.User;
-import com.service.AdministratorsService;
+import com.bean.Developer_administrator;
 import com.service.DeveloperService;
 import com.service.UserService;
 import org.junit.Test;
@@ -23,71 +22,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration({"classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml"})
 public class ServiceTest {
 
-    @Autowired
-    //private UserService userService;
-    private AdministratorsService administratorsService;
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private DeveloperService developerService;
 
 
-    /**
-     * 1、登录时通过用户名来确认用户名是否存在
-     */
-/*
-=======
-//    @Test
-//    public void selectUserByUserName() {
-//        System.out.println("service测试开始。。。。");
-//
-//        System.out.println(userService.selectUserByUserName("张三"));
-//
-//        System.out.println("service测试结束。。。。");
-//    }
-
->>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
     @Test
-    public void developer_login(){
-        System.out.println("service测试开始。。。。");
-
-<<<<<<< HEAD
-        System.out.println(userService.selectUserByUserName("王浩"));
-=======
-        System.out.println(developerService.login("zjut","123"));
->>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
-
-        System.out.println("service测试结束。。。。");
-    }
- */
-
-    @Test
-    public void selectAdministratorsByName(){
+    public void loginDeveloper(){
         System.out.println("service测试开始。。。");
-        User user = new User();
-        user = userService.selectUserByUserName("miao");
-        System.out.println(user.getUserAge());
-        System.out.println("service测试结束。。。");
+        Developer_administrator developer_administrator=developerService.login("zjut","123");
+        System.out.println(developer_administrator);
     }
 
 
-
-    /**
-     * 2、注册时往user表里面插入用户名和密码
-     */
-    /*
-    @Test
-    public void insertUser(){
-        System.out.println("service测试开始。。。。");
-
-        User user = new User();
-        user.setUsername("王浩");
-        user.setPassword("123");
-        System.out.println(userService.insertUser(user));
-
-        System.out.println("service测试结束。。。。");
-    }
-
-     */
 }

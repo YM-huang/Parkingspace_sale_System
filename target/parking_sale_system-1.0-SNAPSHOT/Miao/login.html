@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Login</title>
+		<link href="css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="show-login-btn">
+			-> Show Login Form
+		</div>
+
+		<div class="show-register-btn">
+			-> Show register Form
+		</div>
+
+		<div class="login-box">
+			<div class="hide-login-btn">
+				+
+			</div>
+			<form action="" method="POST" class="login-form">
+				<h1>Welcome</h1>
+				<input class="txtb" type="text" name="" placeholder="Username" />
+				<input class="txtb" type="password" name="" placeholder="Password" />
+				<input class="login-btn" type="submit" name="" value="Login" disabled />
+			</form>
+		</div>
+
+		<div class="register-box">
+			<div class="hide-register-btn">
+				+
+			</div>
+			<form action="" method="POST" class="register-form">
+				<h1>Register</h1>
+				<input class="txtb" type="text" name="" placeholder="Username" />
+				<input class="txtb" type="password" name="" placeholder="Password" />
+				<input class="txtb" type="password" name="" placeholder="Repeat Password" />
+				<input class="register-btn" type="submit" name="" value="register" disabled />
+			</form>
+		</div>
+
+		<script type="text/javascript">
+			function hasClass(element, clssname) {
+				return element.className.match(new RegExp('(\\s|^)' + clssname + '(\\s|$)'))
+			}
+			function addClass(element, clssname) {
+				if (!this.hasClass(element, clssname)) element.className += ' ' + clssname
+			}
+			function removeClass(element, clssname) {
+				if (hasClass(element, clssname)) {
+					var reg = new RegExp('(\\s|^)' + clssname + '(\\s|$)')
+					element.className = element.className.replace(reg, ' ')
+				}
+			}
+			function toggleClass(element, clssname) {
+				if (hasClass(element, clssname)) {
+					removeClass(element, clssname)
+				} else {
+					addClass(element, clssname)
+				}
+			}
+			var loginBox = document.getElementsByClassName('login-box')
+			var registerBox = document.getElementsByClassName('register-box')
+			var showBtn1 = document.getElementsByClassName('show-login-btn')
+			var hideBtn1 = document.getElementsByClassName('hide-login-btn')
+			var showBtn2 = document.getElementsByClassName('show-register-btn')
+			var hideBtn2 = document.getElementsByClassName('hide-register-btn')
+			showBtn1[0].addEventListener('click', function() {
+				toggleClass(loginBox[0], 'showed')
+			})
+			hideBtn1[0].addEventListener('click', function() {
+				toggleClass(loginBox[0], 'showed')
+			})
+			showBtn2[0].addEventListener('click', function() {
+				toggleClass(registerBox[0], 'showed')
+			})
+			hideBtn2[0].addEventListener('click', function() {
+				toggleClass(registerBox[0], 'showed')
+			})
+		</script>
+	</body>
+</html>

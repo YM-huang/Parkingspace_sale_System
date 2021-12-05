@@ -7,8 +7,12 @@
         values (DEFAULT ,#{username},#{password})
     </insert>
 
-    <select id="selectUserByUserName" resultType="com.bean.User" parameterType="Map">
+    <select id="selectUserByUserName" resultType="com.bean.User" parameterType="java.util.Map">
           select * from user_information where user_name = #{userName}
+    </select>
+
+    <select id="userLogin" resultType="com.bean.User" parameterType="java.util.Map">
+        select * from user_login where user_identity = #{userIdentity} and user_password = #{password}
     </select>
 
 </mapper>

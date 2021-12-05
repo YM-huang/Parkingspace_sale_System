@@ -2,9 +2,6 @@ package dao;
 
 import com.dao.DeveloperMapper;
 import com.dao.UserMapper;
-import com.dao.AdministratorsMapper;
-import com.bean.Administrators;
-import com.bean.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,89 +21,30 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:spring/spring-dao.xml")
 public class DaoTest {
 
-    @Autowired
-    private AdministratorsMapper administratorsMapper;
     //private UserMapper userMapper;
-
+    @Autowired
     private UserMapper userMapper;
     @Autowired
     private DeveloperMapper developerMapper;
 
 
-
     /**
      * 1、登录时通过用户名来确认用户名是否存在
-     *
+     * <p>
      * 提示：如果username是中文，则查询为null
      * 解决方法：在jdbc.url后面添加  useUnicode=true&characterEncoding=utf-8  即可解决
      */
 
-
-
-    @Test
-    public void selectUserByUserName() {
-        System.out.println("dao测试开始。。。。");
-        System.out.println(userMapper.selectUserByUserName("001"));
-        System.out.println("dao测试结束。。。。");
-    }
-
 //    @Test
-//    public void selectdeveloper() {
+//    public void selectUserByUserName() {
 //        System.out.println("dao测试开始。。。。");
-//        System.out.println(developerMapper.login("zjut","123"));
+//        System.out.println(userMapper.selectUserByUserName("123"));
 //        System.out.println("dao测试结束。。。。");
 //    }
-
-
-
-
-    /**
-     * 2、注册时往user表里面插入数据
-     */
-    /*
     @Test
-    public void insertUser(){
+    public void selectdeveloper() {
         System.out.println("dao测试开始。。。。");
-        User user = new User();
-        user.setUsername("王浩");
-        user.setPassword("123");
-        System.out.println(userMapper.insertUser(user));
-        System.out.println("到测试结束。。。。");
+        System.out.println(developerMapper.login("zjut", "123"));
+        System.out.println("dao测试结束。。。。");
     }
-
-//    @Test
-//    public void selectUserByAdministratorsName(){
-//        System.out.println("测试开始");
-//        Administrators administrators =new Administrators();
-//        administrators =administratorsMapper.selectAdministratorsByName("lihua");
-//        System.out.println(administrators.getAdministratorsName()+administrators.getAdministratorsPassword());
-//    }
-    /*
-    @Test
-    public void updateAdministratorsMoney(){
-        System.out.println("修改开始");
-        Administrators administrators =new Administrators();
-        administrators =administratorsMapper.selectAdministratorsByName("lihua");
-        double moneys=3000+administrators.getMoney();
-        System.out.println(moneys);
-
-        administratorsMapper.updateAdministratorsMoney(moneys,"lihua");
-    }
-
-     */
-
-    /**
-     * 2、注册时往user表里面插入数据
-     */
-//    @Test
-//    public void insertUser(){
-//        System.out.println("dao测试开始。。。。");
-//        User user = new User();
-//        user.setUsername("王浩");
-//        user.setPassword("123");
-//        System.out.println(userMapper.insertUser(user));
-//        System.out.println("到测试结束。。。。");
-//    }
-
-
 }
