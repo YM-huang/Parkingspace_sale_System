@@ -1,12 +1,19 @@
 package dao;
 
+import com.bean.Order;
+import com.bean.ParkingSpace;
 import com.dao.DeveloperMapper;
+import com.dao.OrderMapper;
+import com.dao.ParkingSpaceMapper;
 import com.dao.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 记住@Test前往不要忘写
@@ -26,7 +33,10 @@ public class DaoTest {
     private UserMapper userMapper;
     @Autowired
     private DeveloperMapper developerMapper;
-
+    @Autowired
+    private ParkingSpaceMapper parkingSpaceMapper;
+    @Autowired
+    private OrderMapper orderMapper;
 
     /**
      * 1、登录时通过用户名来确认用户名是否存在
@@ -47,4 +57,38 @@ public class DaoTest {
         System.out.println(developerMapper.login("zjut", "123"));
         System.out.println("dao测试结束。。。。");
     }
+    @Test
+    public void insertParkSpace() {
+        System.out.println("dao测试开始。。。。");
+        ParkingSpace parkingSpace=new ParkingSpace();
+        parkingSpace.setId("0004");
+        parkingSpace.setAddress("123");
+        parkingSpace.setPrice(123);
+        System.out.println(parkingSpaceMapper.insertParkSpace(parkingSpace));
+        System.out.println("dao测试结束。。。。");
+    }
+    @Test
+    public void selectOrder() {
+        System.out.println("dao测试开始。。。。");
+        List<Order> list=orderMapper.selectOrder(1,2,"","zjut");
+        System.out.println(list.get(0).getOrderId());
+        System.out.println(list.get(1).getOrderId());
+        System.out.println("dao测试结束。。。。");
+    }
+    @Test
+    public void updateOrder() {
+        System.out.println("dao测试开始。。。。");
+        Date now = new Date();
+        Order order =new Order();
+        order.setOrderId("111");
+        order.setContractInitiator("小强");
+        order.setContractContent("content_image");
+        order.setFinalPrice(10000);
+        order.setState(2);
+        order.setFinalPaymentTime(now);
+        System.out.println(orderMapper.updateOrder(order));
+        System.out.println("dao测试结束。。。。");
+    }
+
+
 }

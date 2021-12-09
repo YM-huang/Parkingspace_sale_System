@@ -14,27 +14,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>用户登陆注册</title>
-    <link href="<%=path%>/Miao/css/style.css" rel="stylesheet">
+    <link href="<%=path%>/Miao/css2/style2.css" rel="stylesheet">
 </head>
 <body>
-    <div class="show-login-btn">
-        -> Show Login Form
-    </div>
-
-    <div class="show-register-btn">
-        -> Show register Form
-    </div>
-
     <div class="login-box">
-        <div class="hide-login-btn">
-            +
-        </div>
         <form action="${pageContext.request.contextPath}/user/login" method="POST" class="login-form">
             <h1>Welcome</h1>
             <input class="txtb" type="text" name="username" placeholder="Username" />
             <input class="txtb" type="password" name="password" placeholder="Password" />
             <input class="login-btn" type="submit" name="" value="Login" />
         </form>
+        <div class="show-register-btn">
+            -> register for account
+        </div>
     </div>
 
     <div class="register-box">
@@ -46,7 +38,7 @@
             <input class="txtb" type="text" name="" placeholder="Username" />
             <input class="txtb" type="password" name="" placeholder="Password" />
             <input class="txtb" type="password" name="" placeholder="Repeat Password" />
-            <input class="register-btn" type="submit" name="" value="register" disabled />
+            <input class="register-btn" type="submit" name="" value="register" />
         </form>
     </div>
 
@@ -70,18 +62,9 @@
                 addClass(element, clssname)
             }
         }
-        var loginBox = document.getElementsByClassName('login-box')
         var registerBox = document.getElementsByClassName('register-box')
-        var showBtn1 = document.getElementsByClassName('show-login-btn')
-        var hideBtn1 = document.getElementsByClassName('hide-login-btn')
         var showBtn2 = document.getElementsByClassName('show-register-btn')
         var hideBtn2 = document.getElementsByClassName('hide-register-btn')
-        showBtn1[0].addEventListener('click', function() {
-            toggleClass(loginBox[0], 'showed')
-        })
-        hideBtn1[0].addEventListener('click', function() {
-            toggleClass(loginBox[0], 'showed')
-        })
         showBtn2[0].addEventListener('click', function() {
             toggleClass(registerBox[0], 'showed')
         })

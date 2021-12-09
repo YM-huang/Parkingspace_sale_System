@@ -19,6 +19,16 @@
     <script src="<%=path%>/assets/js/index.js"></script>
 </head>
 <body>
+<%
+    String mess=(String)session.getAttribute("message");
+    if("".equals(mess)  || mess==null){
+
+    }
+    else{%>
+<script type="text/javascript">
+    alert("<%=mess%>");
+</script>
+<% session.setAttribute("message", "");}%>
 <!-- 搭建结构 -->
 <div class="container switch">
     <!-- 注册页面 -->

@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% String path = request.getContextPath(); %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +25,16 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
 <body>
+<%
+    String mess=(String)session.getAttribute("message");
+    if("".equals(mess)  || mess==null){
+
+    }
+    else{%>
+<script type="text/javascript">
+    alert("<%=mess%>");
+</script>
+<% session.setAttribute("message", "");}%>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -342,19 +354,28 @@
                                         <strong>订单详情</strong>
                                     </div>
                                     <div class="col-xs-12">
-                                        <form>
-                                            <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
-                                                <input type="text" class="form-control">
+                                        <form action="${pageContext.request.contextPath}/developer/now_orderlist" method="post" name="page">
+                                            <div class="form-group input-group col-xs-12 col-sm-8" style="float: left">
+                                                <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
+                                                <input type="text" class="form-control" name="search">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i>
                                                     </button>
                                                 </span>
                                             </div>
-                                            <div class="form-group col-xs-12 col-sm-1">
-                                                <button class="btn btn-success">上一页</button>
+                                            <div class="form-group col-xs-12 col-sm-2">
+                                                <select name="pageSize" class="form-control">
+                                                    <option value="${pageSize}" selected hidden>每页${pageSize}条</option>
+                                                    <option value ="5">每页5条</option>
+                                                    <option value ="10">每页10条</option>
+                                                    <option value="20">每页20条</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-1">
-                                                <button class="btn btn-success">下一页</button>
+                                                <button class="btn btn-success" name="before" onclick="var p = document.getElementById('pageNum'); p.value=Number(p.value)-1;">上一页</button>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-1">
+                                                <button class="btn btn-success" name="after" onclick="var p = document.getElementById('pageNum'); p.value=Number(p.value)+1;">下一页</button>
                                             </div>
                                         </form>
                                     </div>
@@ -364,39 +385,136 @@
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Username</th>
+                                                        <th>订单编号</th>
+                                                        <th>车位编号</th>
+                                                        <th>订单创建时间</th>
+                                                        <th>已交定金</th>
+                                                        <th>订单状态</th>
+                                                        <th>尾款时间</th>
+                                                        <th>详情信息</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr class="success">
-                                                        <td>1</td>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>2</td>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>3</td>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>4</td>
-                                                        <td>John</td>
-                                                        <td>Smith</td>
-                                                        <td>@jsmith</td>
-                                                    </tr>
+                                                    <c:forEach items="${orderlist}" var="order" varStatus="status">
+                                                        <tr>
+                                                            <th>${order.orderId }</th>
+                                                            <th>${order.parkingSpaceId}</th>
+                                                            <th><fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/></th>
+                                                            <th>${order.deposit}</th>
+                                                            <th><c:if test="${order.state==1}">待处理</c:if>
+                                                                <c:if test="${order.state==2}">尾款阶段</c:if>
+                                                                <c:if test="${order.state==3}">交易完成</c:if>
+                                                                <c:if test="${order.state==4}">交易失败</c:if></th>
+                                                            <th><fmt:formatDate value="${order.finalPaymentTime}" pattern="yyyy/MM/dd"/></th>
+                                                            <th><a style="color: #0b6cbc" data-toggle="modal" data-target="#${status.count}">处理订单</a></th>
+                                                        </tr>
+                                                        <div class="modal fade" id="${status.count}" tabindex="-1" role="dialog"
+                                                         aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal"
+                                                                            aria-hidden="true">&times;
+                                                                    </button>
+                                                                    <h4 class="modal-title">订单信息</h4>
+                                                                </div>
+                                                                <br>
+                                                                <form action="${pageContext.request.contextPath}/developer/modify_orderlist" method="post" enctype="multipart/form-data">
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">订单编号:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" value="${order.orderId}" readonly="readonly"
+                                                                                   class="col-xs-10 col-sm-5" name="orderId"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">车位编号:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="parkingSpaceId"
+                                                                                   value="${order.parkingSpaceId}" readonly="readonly"
+                                                                                   class="col-xs-10 col-sm-5"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">合同签名:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="contractSignatory"
+                                                                                   value="${order.contractSignatory}" readonly="readonly"
+                                                                                   class="col-xs-10 col-sm-5"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">合同起草人:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="contractInitiator"
+                                                                                   value="${order.contractInitiator}"
+                                                                                   class="col-xs-10 col-sm-5"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">合同内容:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="file" name="contractContent"
+                                                                                   class="col-xs-10 col-sm-5"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">订单时间:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="orderTime" class="col-xs-10 col-sm-5"
+                                                                                   value="<fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/>" readonly="readonly"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">最终价格:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="finalPrice" class="col-xs-10 col-sm-5" value="${order.finalPrice}"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">已付定金:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="deposit" class="col-xs-10 col-sm-5" value="${order.deposit}" readonly="readonly"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">订单状态:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" name="state" class="col-xs-10 col-sm-5" value="${order.state}" readonly="readonly"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="form-group">
+                                                                        <label class="col-sm-3 control-label no-padding-right">尾款时间:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="date" name="finalPaymentTime" class="col-xs-10 col-sm-5" value="<fmt:formatDate value="${order.finalPaymentTime}" pattern="yyyy/MM/dd HH:mm:ss"/>"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-info" type="submit">
+                                                                            <i class="icon-ok bigger-110"></i>
+                                                                            提交
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-default"
+                                                                                data-dismiss="modal">关闭
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal -->
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <div class="center-block">当前第${pageNum}页</div>
                                             </div>
                                         </div>
                                     </div>
@@ -423,7 +541,6 @@
 <script src="<%=path%>/assets/js/jquery.metisMenu.js"></script>
 <!-- Custom Js -->
 <script src="<%=path%>/assets/js/custom-scripts.js"></script>
-
 
 </body>
 </html>
