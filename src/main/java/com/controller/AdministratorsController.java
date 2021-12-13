@@ -1,8 +1,6 @@
 package com.controller;
 import com.bean.Administrators;
-import com.bean.Order;
 import com.service.AdministratorsService;
-import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,19 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 @Controller
 @RequestMapping("/administrators")
 public class AdministratorsController {
     @Autowired
     private AdministratorsService administratorsService;
-
-    @Autowired
-    private OrderService orderService;
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestParam(value = "adminName") String adminName,@RequestParam(value = "adminPassword") String adminPassword, HttpServletRequest request, Model model){
         Administrators administrators=administratorsService.selectAdministratorsByName(adminName);
@@ -47,20 +37,5 @@ public class AdministratorsController {
             return "Da/login";
         }
     }
-/*
-    @RequestMapping(value = "/GenerateOrder",method = RequestMethod.POST)
-    public void GenerateOrder(@RequestParam(value = "adminName") String adminName){
-
-
-
-
-    }
-
- */
-
-
-
-
-
 
 }

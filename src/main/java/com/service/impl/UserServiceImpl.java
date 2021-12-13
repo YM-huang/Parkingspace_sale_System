@@ -1,9 +1,8 @@
 package com.service.impl;
 
-import com.bean.User;
 import com.dao.UserMapper;
+import com.bean.User;
 import com.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +21,6 @@ public class UserServiceImpl implements UserService {
     public User selectUserByUserName(String username) {
         return userMapper.selectUserByUserName(username);
     }
-
-    @Override
-    public User userLogin(String username,String password){return userMapper.userLogin(username,password);};
 
     @Override
     public boolean insertUser(User user) {

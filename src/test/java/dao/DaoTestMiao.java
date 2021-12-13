@@ -51,15 +51,6 @@ public class DaoTestMiao {
         System.out.println("dao测试结束。。。。");
     }
 
-    @Test
-    public void userLogin() {
-        System.out.println("dao测试开始。。。。");
-        User user = new User();
-        user = userMapper.userLogin("001","123456");
-        System.out.println(user.getUserPassword());
-        System.out.println("dao测试结束。。。。");
-    }
-
 //    @Test
 //    public void selectdeveloper() {
 //        System.out.println("dao测试开始。。。。");

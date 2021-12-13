@@ -1,23 +1,15 @@
 package service;
 
 import com.bean.Administrators;
-import com.bean.Developer_administrator;
-import com.bean.Order;
+import com.bean.User;
+import com.service.AdministratorsService;
 import com.service.DeveloperService;
-import com.service.ParkingSpaceService;
 import com.service.UserService;
-import dao.DaoTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @RunWith就是一个运行器
@@ -31,42 +23,71 @@ import java.util.List;
 @ContextConfiguration({"classpath:spring/spring-dao.xml","classpath:spring/spring-service.xml"})
 public class ServiceTest {
 
+    @Autowired
+    //private UserService userService;
+    private AdministratorsService administratorsService;
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private DeveloperService developerService;
 
-    @Autowired
-    private ParkingSpaceService parkingSpaceService;
+
+    /**
+     * 1、登录时通过用户名来确认用户名是否存在
+     */
+/*
+=======
+//    @Test
+//    public void selectUserByUserName() {
+//        System.out.println("service测试开始。。。。");
+//
+//        System.out.println(userService.selectUserByUserName("张三"));
+//
+//        System.out.println("service测试结束。。。。");
+//    }
+
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
+    @Test
+    public void developer_login(){
+        System.out.println("service测试开始。。。。");
+
+<<<<<<< HEAD
+        System.out.println(userService.selectUserByUserName("王浩"));
+=======
+        System.out.println(developerService.login("zjut","123"));
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
+
+        System.out.println("service测试结束。。。。");
+    }
+ */
 
     @Test
-    public void loginDeveloper(){
+    public void selectAdministratorsByName(){
         System.out.println("service测试开始。。。");
-        Developer_administrator developer_administrator=developerService.login("zjut","123");
-        System.out.println(developer_administrator);
+        User user = new User();
+        user = userService.selectUserByUserName("miao");
+        System.out.println(user.getUserAge());
+        System.out.println("service测试结束。。。");
     }
+
+
+
+    /**
+     * 2、注册时往user表里面插入用户名和密码
+     */
+    /*
     @Test
-    public void insertParkSpace(){
-        System.out.println("service测试开始。。。");
-        boolean b=developerService.insertParkSpace("001","1234","1234","n123");
-        System.out.println(b);
-        System.out.println("测试结束");
+    public void insertUser(){
+        System.out.println("service测试开始。。。。");
+
+        User user = new User();
+        user.setUsername("王浩");
+        user.setPassword("123");
+        System.out.println(userService.insertUser(user));
+
+        System.out.println("service测试结束。。。。");
     }
-    @Test
-    public void selectOrder(){
-        System.out.println("service测试开始。。。");
-        List<Order> list = developerService.selectOrder(1,10,"","zjut");
-        System.out.println(list.get(0).getOrderId());
-        System.out.println("测试结束");
-    }
-    @Test
-    public void updateOrder() throws ParseException {
-        System.out.println("service测试开始。。。");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
-        Date date =new Date();
-        System.out.println(developerService.updateOrder("111","小强","HT21312","123456", dateFormat.format(date),"zjut"));
-        System.out.println("测试结束");
-    }
+
+     */
 }

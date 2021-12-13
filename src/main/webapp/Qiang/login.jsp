@@ -19,16 +19,6 @@
     <script src="<%=path%>/assets/js/index.js"></script>
 </head>
 <body>
-<%
-    String mess=(String)session.getAttribute("message");
-    if("".equals(mess)  || mess==null){
-
-    }
-    else{%>
-<script type="text/javascript">
-    alert("<%=mess%>");
-</script>
-<% session.setAttribute("message", "");}%>
 <!-- 搭建结构 -->
 <div class="container switch">
     <!-- 注册页面 -->
@@ -43,10 +33,10 @@
     </div>
     <!-- 登录页面 -->
     <div class="container-form container-signin">
-        <form class="form" style="background: #fbf2e3" action="${pageContext.request.contextPath}/developer/login" method="post">
+        <form action="javascript:void(0);" class="form" style="background: #fbf2e3">
             <h2 class="form-title">登录</h2>
-            <input type="text" placeholder="User" class="input" name="username">
-            <input type="password" placeholder="Password" class="input" name="password">
+            <input type="text" placeholder="User" class="input">
+            <input type="password" placeholder="Password" class="input">
             <a href="javascript:void(0);">forgot your password?</a>
             <button class="submit">登录</button>
         </form>

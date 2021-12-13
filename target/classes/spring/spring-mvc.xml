@@ -14,7 +14,9 @@
         <!--2.后缀-->
         <property name="suffix" value=".jsp"/>
     </bean>
-    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
     <mvc:default-servlet-handler/>
+
     <mvc:annotation-driven />
+
 </beans>

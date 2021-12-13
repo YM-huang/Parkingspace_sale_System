@@ -19,36 +19,34 @@
     <script src="<%=path%>/assets/js/index.js"></script>
 </head>
 <body>
-<%
-    String mess=(String)session.getAttribute("message");
-    if("".equals(mess)  || mess==null){
-
-    }
-    else{%>
-<script type="text/javascript">
-    alert("<%=mess%>");
-</script>
-<% session.setAttribute("message", "");}%>
 <!-- 搭建结构 -->
 <div class="container switch">
     <!-- 注册页面 -->
     <div class="container-form container-signup">
+<<<<<<< HEAD
+        <form action="" class="form">
+=======
         <form action="" class="form" style="background: #fbf2e3">
-            <h2 class="form-title">注册</h2>
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
+            <h2 class="form-title">Sign Up</h2>
             <input type="text" placeholder="User" class="input">
             <input type="email" placeholder="Email" class="input">
             <input type="password" placeholder="Password" class="input">
-            <button class="submit">注册</button>
+            <button class="submit">sign up</button>
         </form>
     </div>
     <!-- 登录页面 -->
     <div class="container-form container-signin">
-        <form class="form" style="background: #fbf2e3" action="${pageContext.request.contextPath}/developer/login" method="post">
-            <h2 class="form-title">登录</h2>
-            <input type="text" placeholder="User" class="input" name="username">
-            <input type="password" placeholder="Password" class="input" name="password">
+<<<<<<< HEAD
+        <form action="javascript:void(0);" class="form">
+=======
+        <form action="javascript:void(0);" class="form" style="background: #fbf2e3">
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
+            <h2 class="form-title">Sign In</h2>
+            <input type="text" placeholder="User" class="input">
+            <input type="password" placeholder="Password" class="input">
             <a href="javascript:void(0);">forgot your password?</a>
-            <button class="submit">登录</button>
+            <button class="submit">sign in</button>
         </form>
     </div>
     <!-- 覆盖层 -->

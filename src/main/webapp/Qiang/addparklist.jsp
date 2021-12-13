@@ -23,16 +23,6 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
 <body>
-<%
-    String mess=(String)session.getAttribute("message");
-    if("".equals(mess)  || mess==null){
-
-    }
-    else{%>
-<script type="text/javascript">
-    alert("<%=mess%>");
-</script>
-<% session.setAttribute("message", "");}%>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -347,18 +337,18 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <form action="${pageContext.request.contextPath}/developer/addpark_pace" method="post" enctype="multipart/form-data">
+                                <form>
                                     <label>小区</label>
-                                    <input class="form-control" name="residential_quarters_id">
+                                    <input class="form-control">
                                     <br>
                                     <label>车位编号</label>
-                                    <input class="form-control" name="address">
+                                    <input class="form-control">
                                     <br>
                                     <label>定价</label>
-                                    <input class="form-control" name="price">
+                                    <input class="form-control">
                                     <br>
                                     <label>车位图片</label>
-                                    <input type="file" name="photo">
+                                    <input type="file">
                                     <br>
                                     <button type="submit" class="btn btn-default">提交</button>
                                     <button type="reset" class="btn btn-default">重置</button>

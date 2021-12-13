@@ -1,19 +1,15 @@
 package dao;
 
-import com.bean.Order;
-import com.bean.ParkingSpace;
 import com.dao.DeveloperMapper;
-import com.dao.OrderMapper;
-import com.dao.ParkingSpaceMapper;
 import com.dao.UserMapper;
+import com.dao.AdministratorsMapper;
+import com.bean.Administrators;
+import com.bean.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * 记住@Test前往不要忘写
@@ -28,67 +24,89 @@ import java.util.List;
 @ContextConfiguration("classpath:spring/spring-dao.xml")
 public class DaoTest {
 
-    //private UserMapper userMapper;
     @Autowired
+    private AdministratorsMapper administratorsMapper;
+    //private UserMapper userMapper;
+
     private UserMapper userMapper;
     @Autowired
     private DeveloperMapper developerMapper;
-    @Autowired
-    private ParkingSpaceMapper parkingSpaceMapper;
-    @Autowired
-    private OrderMapper orderMapper;
+
+
 
     /**
      * 1、登录时通过用户名来确认用户名是否存在
-     * <p>
+     *
      * 提示：如果username是中文，则查询为null
      * 解决方法：在jdbc.url后面添加  useUnicode=true&characterEncoding=utf-8  即可解决
      */
 
+
+
+    @Test
+    public void selectUserByUserName() {
+        System.out.println("dao测试开始。。。。");
+        System.out.println(userMapper.selectUserByUserName("001"));
+        System.out.println("dao测试结束。。。。");
+    }
+
 //    @Test
-//    public void selectUserByUserName() {
+//    public void selectdeveloper() {
 //        System.out.println("dao测试开始。。。。");
-//        System.out.println(userMapper.selectUserByUserName("123"));
+//        System.out.println(developerMapper.login("zjut","123"));
 //        System.out.println("dao测试结束。。。。");
 //    }
+
+
+
+
+    /**
+     * 2、注册时往user表里面插入数据
+     */
+    /*
     @Test
-    public void selectdeveloper() {
+    public void insertUser(){
         System.out.println("dao测试开始。。。。");
-        System.out.println(developerMapper.login("zjut", "123"));
-        System.out.println("dao测试结束。。。。");
+        User user = new User();
+        user.setUsername("王浩");
+        user.setPassword("123");
+        System.out.println(userMapper.insertUser(user));
+        System.out.println("到测试结束。。。。");
     }
+
+//    @Test
+//    public void selectUserByAdministratorsName(){
+//        System.out.println("测试开始");
+//        Administrators administrators =new Administrators();
+//        administrators =administratorsMapper.selectAdministratorsByName("lihua");
+//        System.out.println(administrators.getAdministratorsName()+administrators.getAdministratorsPassword());
+//    }
+    /*
     @Test
-    public void insertParkSpace() {
-        System.out.println("dao测试开始。。。。");
-        ParkingSpace parkingSpace=new ParkingSpace();
-        parkingSpace.setId("0004");
-        parkingSpace.setAddress("123");
-        parkingSpace.setPrice(123);
-        System.out.println(parkingSpaceMapper.insertParkSpace(parkingSpace));
-        System.out.println("dao测试结束。。。。");
+    public void updateAdministratorsMoney(){
+        System.out.println("修改开始");
+        Administrators administrators =new Administrators();
+        administrators =administratorsMapper.selectAdministratorsByName("lihua");
+        double moneys=3000+administrators.getMoney();
+        System.out.println(moneys);
+
+        administratorsMapper.updateAdministratorsMoney(moneys,"lihua");
     }
-    @Test
-    public void selectOrder() {
-        System.out.println("dao测试开始。。。。");
-        List<Order> list=orderMapper.selectOrder(1,2,"","zjut");
-        System.out.println(list.get(0).getOrderId());
-        System.out.println(list.get(1).getOrderId());
-        System.out.println("dao测试结束。。。。");
-    }
-    @Test
-    public void updateOrder() {
-        System.out.println("dao测试开始。。。。");
-        Date now = new Date();
-        Order order =new Order();
-        order.setOrderId("111");
-        order.setContractInitiator("小强");
-        order.setContractContent("content_image");
-        order.setFinalPrice(10000);
-        order.setState(2);
-        order.setFinalPaymentTime(now);
-        System.out.println(orderMapper.updateOrder(order));
-        System.out.println("dao测试结束。。。。");
-    }
+
+     */
+
+    /**
+     * 2、注册时往user表里面插入数据
+     */
+//    @Test
+//    public void insertUser(){
+//        System.out.println("dao测试开始。。。。");
+//        User user = new User();
+//        user.setUsername("王浩");
+//        user.setPassword("123");
+//        System.out.println(userMapper.insertUser(user));
+//        System.out.println("到测试结束。。。。");
+//    }
 
 
 }

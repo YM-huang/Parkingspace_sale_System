@@ -15,11 +15,6 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/spring-*.xml</param-value>
         </init-param>
-        <multipart-config>
-            <location>C:\Users\95243\IdeaProjects\parking_sale_system\src\main\webapp\img</location>
-            <max-file-size>2097152</max-file-size>
-            <max-request-size>4194304</max-request-size>
-        </multipart-config>
     </servlet>
 
     <servlet-mapping>

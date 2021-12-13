@@ -10,11 +10,17 @@
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--1.前缀-->
+<<<<<<< HEAD
         <property name="prefix" value="/"/>
+=======
+        <property name="prefix" value="/jsp/"/>
+>>>>>>> 4dd7ee6ca105cdf57a484258332e5adb3a8e9a41
         <!--2.后缀-->
         <property name="suffix" value=".jsp"/>
     </bean>
-    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
     <mvc:default-servlet-handler/>
+
     <mvc:annotation-driven />
+
 </beans>

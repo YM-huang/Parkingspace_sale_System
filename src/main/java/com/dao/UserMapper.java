@@ -1,6 +1,5 @@
 package com.dao;
 
-import com.bean.Developer_administrator;
 import com.bean.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,8 +16,6 @@ public interface UserMapper {
      * @return
      */
     User selectUserByUserName(@Param("userName") String userName);
-
-    User userLogin(@Param("userIdentity") String username, @Param("password") String password);
 
 
     boolean insertUser(User user);
