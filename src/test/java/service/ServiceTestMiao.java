@@ -2,10 +2,7 @@ package service;
 
 import com.bean.Order;
 import com.bean.User;
-import com.service.AdministratorsService;
-import com.service.DeveloperService;
-import com.service.OrderService;
-import com.service.UserService;
+import com.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +33,8 @@ public class ServiceTestMiao {
     private DeveloperService developerService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private CouponService couponService;
 
 
     /**

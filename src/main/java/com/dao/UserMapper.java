@@ -29,6 +29,8 @@ public interface UserMapper {
 
     boolean insertUserPassword(User user);
 
+    boolean updateUserInfo(User user);
+
     User selectNameById(@Param("userIdentity") String userIdentity);
 
 }

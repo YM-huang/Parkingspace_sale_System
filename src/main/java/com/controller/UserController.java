@@ -1,9 +1,8 @@
 package com.controller;
 
-import com.bean.Bankcard;
-import com.bean.Order;
-import com.bean.User;
+import com.bean.*;
 import com.service.BankcardService;
+import com.service.CouponService;
 import com.service.OrderService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * @author sushuai
- * @date 2019/03/04/6:09
  */
 @Controller
 @RequestMapping("/user")
@@ -40,6 +39,10 @@ public class UserController {
 
     @Autowired
     private BankcardService bankcardService;
+
+    @Autowired
+    private CouponService couponService;
+
     /**
      * 登录的控制层
      *
@@ -59,6 +62,7 @@ public class UserController {
                 HttpSession session = request.getSession();
                 session.setAttribute("username", name);
                 session.setAttribute("userid", username);
+                session.setAttribute("userpage", 1);
 
                 model.addAttribute("state","登录成功");
                 return "Miao/index";
@@ -129,12 +133,37 @@ public class UserController {
      */
     @RequestMapping(value = "/personalinfo")
     public String personalInfo(@RequestParam("userid") String userid,HttpServletRequest request, Model model) {
+        //当前时间
+        Date nowDate = new Date();
+        List<Coupon> couponlist = couponService.selectCoupon(userid);
+        for (Coupon coupon : couponlist) {
+            //开始时间
+            Date startDate = coupon.getStartTime();
+            //结束时间
+            Date endDate = coupon.getEndTime();
+            if (nowDate.getTime() <= startDate.getTime()) {
+                coupon.setPercent(0);
+            } else if (nowDate.getTime() >= endDate.getTime()) {
+                coupon.setPercent(100);
+            } else {
+                //结束时间和开始时间中间的天数
+                Double a = (double) ((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                //当前时间和开始时间中间的天数
+                Double b = (double) ((nowDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                int p = (int) Math.floor(b / a * 100);
+                //计算百分比存入
+                coupon.setPercent(p);
+            }
+        }
         User user = userService.selectNameById(userid);
         List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
         HttpSession session = request.getSession();
         session.setAttribute("bankcardlist", bankcardlist);
+        session.setAttribute("couponlist", couponlist);
         session.setAttribute("user", user);
         session.setAttribute("state", 1);
+        session.setAttribute("insertstate", 0);
+        session.setAttribute("updatestate", 0);
         return "Miao/personalpage";
     }
 
@@ -146,13 +175,37 @@ public class UserController {
      */
     @RequestMapping(value = "/bankcard")
     public String selectBankcard(@RequestParam("userid") String userid,HttpServletRequest request, Model model) {
+        //当前时间
+        Date nowDate = new Date();
+        List<Coupon> couponlist = couponService.selectCoupon(userid);
+        for (Coupon coupon : couponlist) {
+            //开始时间
+            Date startDate = coupon.getStartTime();
+            //结束时间
+            Date endDate = coupon.getEndTime();
+            if (nowDate.getTime() <= startDate.getTime()) {
+                coupon.setPercent(0);
+            } else if (nowDate.getTime() >= endDate.getTime()) {
+                coupon.setPercent(100);
+            } else {
+                //结束时间和开始时间中间的天数
+                Double a = (double) ((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                //当前时间和开始时间中间的天数
+                Double b = (double) ((nowDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                int p = (int) Math.floor(b / a * 100);
+                //计算百分比存入
+                coupon.setPercent(p);
+            }
+        }
         User user = userService.selectNameById(userid);
         List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
         HttpSession session = request.getSession();
         session.setAttribute("bankcardlist", bankcardlist);
+        session.setAttribute("couponlist", couponlist);
         session.setAttribute("user", user);
         session.setAttribute("state", 3);
         session.setAttribute("insertstate", 0);
+        session.setAttribute("updatestate", 0);
         return "Miao/personalpage";
     }
 
@@ -164,6 +217,28 @@ public class UserController {
      */
     @RequestMapping(value = "/addbankcard")
     public String addBankcard(@RequestParam("userid") String userid,@RequestParam("bank") String bank,@RequestParam("bankcardid") String bankcardid,HttpServletRequest request, Model model) {
+        //当前时间
+        Date nowDate = new Date();
+        List<Coupon> couponlist = couponService.selectCoupon(userid);
+        for (Coupon coupon : couponlist) {
+            //开始时间
+            Date startDate = coupon.getStartTime();
+            //结束时间
+            Date endDate = coupon.getEndTime();
+            if (nowDate.getTime() <= startDate.getTime()) {
+                coupon.setPercent(0);
+            } else if (nowDate.getTime() >= endDate.getTime()) {
+                coupon.setPercent(100);
+            } else {
+                //结束时间和开始时间中间的天数
+                Double a = (double) ((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                //当前时间和开始时间中间的天数
+                Double b = (double) ((nowDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                int p = (int) Math.floor(b / a * 100);
+                //计算百分比存入
+                coupon.setPercent(p);
+            }
+        }
         Bankcard bankcard = new Bankcard();
         bankcard.setBank(bank);
         bankcard.setBankcardId(bankcardid);
@@ -172,15 +247,131 @@ public class UserController {
         User user = userService.selectNameById(userid);
         List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
         HttpSession session = request.getSession();
+        session.setAttribute("couponlist", couponlist);
         session.setAttribute("bankcardlist", bankcardlist);
         session.setAttribute("user", user);
         session.setAttribute("state", 3);
+        session.setAttribute("updatestate", 0);
         if (flag){
             session.setAttribute("insertstate", 1);
         }
         else{
             session.setAttribute("insertstate", 2);
         }
+        return "Miao/personalpage";
+    }
+
+    /**
+     * 修改用户信息的控制层
+     *
+     * @param userid
+     * @return
+     */
+    @RequestMapping(value = "/updateuserinfo")
+    public String updateUserInfo(@RequestParam("userid") String userid,@RequestParam("useremail") String useremail,@RequestParam("username") String username,@RequestParam("userphone") String userphone,@RequestParam("sex") String sex,@RequestParam("userquarter") String userquarter,@RequestParam("userbuilding") String userbuilding,@RequestParam("userhouse") String userhouse,HttpServletRequest request, Model model) {
+        //当前时间
+        Date nowDate = new Date();
+        List<Coupon> couponlist = couponService.selectCoupon(userid);
+        for (Coupon coupon : couponlist) {
+            //开始时间
+            Date startDate = coupon.getStartTime();
+            //结束时间
+            Date endDate = coupon.getEndTime();
+            if (nowDate.getTime() <= startDate.getTime()) {
+                coupon.setPercent(0);
+            } else if (nowDate.getTime() >= endDate.getTime()) {
+                coupon.setPercent(100);
+            } else {
+                //结束时间和开始时间中间的天数
+                Double a = (double) ((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                //当前时间和开始时间中间的天数
+                Double b = (double) ((nowDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                int p = (int) Math.floor(b / a * 100);
+                //计算百分比存入
+                coupon.setPercent(p);
+            }
+        }
+        User user = userService.selectNameById(userid);
+        if(!("".equals(useremail.trim())  || useremail==null)){
+            user.setUserIdentity(useremail);
+        }
+        if(!("".equals(username.trim())  || username==null)){
+            user.setUserName(username);
+        }
+        if(!("".equals(userphone.trim())  || userphone==null)){
+            user.setUserPhone(userphone);
+        }
+        if(!("".equals(sex.trim())  || sex==null)){
+            user.setUserSex(sex);
+        }
+        if(!("".equals(userquarter.trim())  || userquarter==null)){
+            user.setUserResidentialQuarters(userquarter);
+        }
+        if(!("".equals(userbuilding.trim())  || userbuilding==null)){
+            user.setUserBuildingNumber(userbuilding);
+        }
+        if(!("".equals(userhouse.trim())  || userhouse==null)){
+            user.setUserHouseNumber(userhouse);
+            user.setUserFloor(Integer.parseInt(userhouse.substring(0,1)));
+        }
+
+        boolean flag =userService.updateUserInfo(user);
+
+        List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
+        HttpSession session = request.getSession();
+        session.setAttribute("couponlist", couponlist);
+        session.setAttribute("bankcardlist", bankcardlist);
+        session.setAttribute("user", user);
+        session.setAttribute("state", 2);
+        session.setAttribute("insertstate", 0);
+        if (flag){
+            session.setAttribute("updatestate", 1);
+        }
+        else{
+            session.setAttribute("updatestate", 2);
+        }
+        return "Miao/personalpage";
+    }
+
+    /**
+     * 添加银行卡的控制层
+     *
+     * @param userid
+     * @return
+     */
+    @RequestMapping(value = "/selectcoupon")
+    public String selectCoupon(@RequestParam("userid") String userid,HttpServletRequest request, Model model) {
+        //当前时间
+        Date nowDate = new Date();
+        List<Coupon> couponlist = couponService.selectCoupon(userid);
+        for (Coupon coupon : couponlist) {
+            //开始时间
+            Date startDate = coupon.getStartTime();
+            //结束时间
+            Date endDate = coupon.getEndTime();
+            if (nowDate.getTime() <= startDate.getTime()) {
+                coupon.setPercent(0);
+            } else if (nowDate.getTime() >= endDate.getTime()) {
+                coupon.setPercent(100);
+            } else {
+                //结束时间和开始时间中间的天数
+                Double a = (double) ((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                //当前时间和开始时间中间的天数
+                Double b = (double) ((nowDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+                int p = (int) Math.floor(b / a * 100);
+                //计算百分比存入
+                coupon.setPercent(p);
+            }
+        }
+        User user = userService.selectNameById(userid);
+        List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
+        HttpSession session = request.getSession();
+        session.setAttribute("couponlist", couponlist);
+        session.setAttribute("bankcardlist", bankcardlist);
+        session.setAttribute("user", user);
+        session.setAttribute("state", 4);
+        session.setAttribute("insertstate", 0);
+        session.setAttribute("updatestate", 0);
         return "Miao/personalpage";
     }
 
@@ -231,6 +422,32 @@ public class UserController {
         String path = request.getServletContext().getRealPath("/sign");
         GenerateImage(str, path+"/11.png");
         return "Success";
+    }
+
+    //    管理车位
+    @RequestMapping(value = "/manageparkingSpace")
+    public String selectParkingSpace(@RequestParam("pageNum") String pageNum,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        if(pageNum.equals("") || pageNum == null || Integer.parseInt(pageNum)<1){
+            pageNum="1";
+        }
+//        if(pageSize.equals("") || pageSize == null){
+//            pageSize="4";
+//        }
+        String did = (String)session.getAttribute("did");
+        if(did==null || did.equals(""))
+            did="zjut@zjut";
+        System.out.println("uid:"+did);
+//        System.out.println("search:"+search);
+//        System.out.println("pageSize:"+pageSize);
+        System.out.println("pageNum:"+pageNum);
+
+        List<ParkingSpace> list = userService.selectParkingSpace(Integer.parseInt(pageNum),4,"",did);
+        model.addAttribute("parklist", list);
+        session.setAttribute("pageSize","4");
+        session.setAttribute("pageNum",pageNum);
+        return "Miao/properties";
+
     }
 
     public static String getUUID(){

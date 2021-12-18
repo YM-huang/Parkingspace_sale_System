@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.*"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <% String path = request.getContextPath(); %>
@@ -130,6 +132,13 @@
 </head>
 <body style="background-image: url(<%=path%>/Miao/personal/images/bg_img.jpg);">
 
+<%--<%--%>
+<%--    Date d = new Date();--%>
+<%--    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");--%>
+<%--    String now = df.format(d);--%>
+<%--    long nowdate = d.getTime();--%>
+<%--%>--%>
+
 <div id="fh5co-main">
     <div class="fh5co-tab-wrap">
         <ul class="fh5co-tab-menu">
@@ -162,107 +171,137 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p>Basic info:</p>
-
-                        <div class="fh5co-feature">
-                            <div class="fh5co-icon">
-                                <i class="icon-user"></i>
-                            </div>
-                            <div class="fh5co-text">
-                                <h2>昵称</h2>
-                                </br>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="${user.userName}">
+                        <form action="${pageContext.request.contextPath}/user/updateuserinfo" method="POST">
+                            <div class="fh5co-feature">
+                                <div class="fh5co-icon">
+                                    <i class="icon-user"></i>
                                 </div>
-                                </br>
-                            </div>
-                        </div>
-
-                        <div class="fh5co-feature">
-                            <div class="fh5co-icon">
-                                <i class="icon-user"></i>
-                            </div>
-                            <div class="fh5co-text">
-                                <h2>电话</h2>
-                                </br>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="${user.userPhone}">
-                                </div>
-                                </br>
-                            </div>
-                        </div>
-
-                        <div class="fh5co-feature">
-                            <div class="fh5co-icon">
-                                <i class="icon-user"></i>
-                            </div>
-                            <div class="fh5co-text">
-                                <h2>邮箱</h2>
-                                </br>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="${user.userIdentity}">
-                                </div>
-                                </br>
-                            </div>
-                        </div>
-
-                        <div class="fh5co-feature">
-                            <div class="fh5co-icon">
-                                <i class="icon-joomla"></i>
-                            </div>
-                            <div class="fh5co-text">
-                                <h2>性别</h2>
-                                <!--									<label class="radio-inline"><input type="radio" name="optradio" checked>男</label>-->
-                                <!--									<label class="radio-inline"><input type="radio" name="optradio">女</label>-->
-                                </br>
-                                <ul class="input_radio">
-                                    <li>
-                                        <label for="male">
-                                            <input id="male" name="sex" type="radio" value="male" <c:if test="${\"男\".equals(user.userSex)}">checked="checked"</c:if>>
-                                            <span class="option-label">男</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="female">
-                                            <input id="female" name="sex" value="female" type="radio" <c:if test="${\"女\".equals(user.userSex)}">checked="checked"</c:if>>
-                                            <span class="option-label">女</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                                </br>
-                            </div>
-                        </div>
-
-                        <div class="fh5co-feature">
-                            <div class="fh5co-icon">
-                                <i class="icon-graduation-cap"></i>
-                            </div>
-                            <div class="fh5co-text">
-                                <h2>住址</h2>
-                                <div class="form-group row">
-                                    <div class="col-xs-4">
-                                        <label for="ex1" style="font-size: 15px">小区:</label>
-                                        <input class="form-control" id="ex1" type="text" placeholder="${user.userResidentialQuarters}">
+                                <div class="fh5co-text">
+                                    <h2>昵称</h2>
+                                    </br>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="${user.userName}" name="username">
                                     </div>
-                                    <div class="col-xs-4">
-                                        <label for="ex2" style="font-size: 15px">楼:</label>
-                                        <input class="form-control" id="ex2" type="text" placeholder="${user.userBuildingNumber}">
+                                    </br>
+                                </div>
+                            </div>
+
+                            <div class="fh5co-feature">
+                                <div class="fh5co-icon">
+                                    <i class="icon-user"></i>
+                                </div>
+                                <div class="fh5co-text">
+                                    <h2>电话</h2>
+                                    </br>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="${user.userPhone}" name="userphone">
                                     </div>
-                                    <div class="col-xs-3">
-                                        <label for="ex3" style="font-size: 15px">房间号:</label>
-                                        <input class="form-control" id="ex3" type="text" placeholder="${user.userHouseNumber}">
+                                    </br>
+                                </div>
+                            </div>
+
+                            <div class="fh5co-feature">
+                                <div class="fh5co-icon">
+                                    <i class="icon-user"></i>
+                                </div>
+                                <div class="fh5co-text">
+                                    <h2>邮箱</h2>
+                                    </br>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="${user.userIdentity}"  name="useremail">
+                                        <input type="text" class="form-control" value="${user.userIdentity}"  name="userid" style="display: none">
+                                    </div>
+                                    </br>
+                                </div>
+                            </div>
+
+                            <div class="fh5co-feature">
+                                <div class="fh5co-icon">
+                                    <i class="icon-joomla"></i>
+                                </div>
+                                <div class="fh5co-text">
+                                    <h2>性别</h2>
+                                    <!--									<label class="radio-inline"><input type="radio" name="optradio" checked>男</label>-->
+                                    <!--									<label class="radio-inline"><input type="radio" name="optradio">女</label>-->
+                                    </br>
+                                    <ul class="input_radio">
+                                        <li>
+                                            <label for="male">
+                                                <input id="male" name="sex" type="radio" value="男" <c:if test="${\"男\".equals(user.userSex)}">checked="checked"</c:if>>
+                                                <span class="option-label">男</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="female">
+                                                <input id="female" name="sex" value="女" type="radio" <c:if test="${\"女\".equals(user.userSex)}">checked="checked"</c:if>>
+                                                <span class="option-label">女</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    </br>
+                                </div>
+                            </div>
+
+                            <div class="fh5co-feature">
+                                <div class="fh5co-icon">
+                                    <i class="icon-graduation-cap"></i>
+                                </div>
+                                <div class="fh5co-text">
+                                    <h2>住址</h2>
+                                    <div class="form-group row">
+                                        <div class="col-xs-4">
+                                            <label for="ex1" style="font-size: 15px">小区:</label>
+                                            <input class="form-control" id="ex1" type="text" placeholder="${user.userResidentialQuarters}"  name="userquarter">
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <label for="ex2" style="font-size: 15px">楼:</label>
+                                            <input class="form-control" id="ex2" type="text" placeholder="${user.userBuildingNumber}"  name="userbuilding">
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <label for="ex3" style="font-size: 15px">房间号:</label>
+                                            <input class="form-control" id="ex3" type="text" placeholder="${user.userHouseNumber}"  name="userhouse">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
 
-                        <div class="fh5co-feature">
-                            </br>
-                            <div class="form-group" style="text-align: center">
-                                <input type="submit" value="Save Change" class="btn btn-primary">
+                            <div class="fh5co-feature">
+                                </br>
+                                <div class="form-group" style="text-align: center">
+                                    <input type="submit" value="Save Change" class="btn btn-primary">
+                                </div>
+                                </br>
                             </div>
-                            </br>
-                        </div>
+
+                            <c:if test="${updatestate==1}">
+                                <div id="fade1" class="black_overlay1"></div>
+                                <div id="light1" class="fh5co-feature white_content2">
+                                    <div class="turnoff">
+                                        <i class="icon-power-off" onclick = "document.getElementById('light1').style.display='none';document.getElementById('fade1').style.display='none'"></i>
+                                    </div>
+
+                                    <div style="margin-top: 75px;text-align: center">
+                                        <i style="font-size: 30px;">修改成功！</i>
+                                    </div>
+
+                                </div>
+                            </c:if>
+
+                            <c:if test="${updatestate==2}">
+                                <div id="fade2" class="black_overlay1"></div>
+                                <div id="light2" class="fh5co-feature white_content2">
+                                    <div class="turnoff">
+                                        <i class="icon-power-off" onclick = "document.getElementById('light2').style.display='none';document.getElementById('fade2').style.display='none'"></i>
+                                    </div>
+
+                                    <div style="margin-top: 75px;text-align: center">
+                                        <i style="font-size: 30px;">修改失败！</i>
+                                    </div>
+
+                                </div>
+                            </c:if>
+                        </form>
 
                     </div>
 
@@ -366,27 +405,13 @@
             <div class="fh5co-content-inner">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                        <p>My Coupon:</p>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="95"><span><strong>HTML5</strong>95%</span></div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="93"><span><strong>CSS3</strong>93%</span></div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="90"><span><strong>jQuery</strong>90%</span></div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="89"><span><strong>PHP</strong>89%</span></div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="85"><span><strong>MySQL</strong>85%</span></div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12 text-center">
-                        <div class="chart" data-percent="90"><span><strong>AngularJS</strong>90%</span></div>
-                    </div>
+                    <c:forEach items="${couponlist}" var="coupon" varStatus="status">
+                        <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                            <a href="${pageContext.request.contextPath}/user/userorder?userid=${user.userIdentity}"><div class="chart" data-percent="${coupon.percent}"><span><strong>${coupon.couponContent}</strong>${coupon.percent}%</span></div></a>
+                        </div>
+                    </c:forEach>
 
                 </div>
             </div>

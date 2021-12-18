@@ -1,11 +1,17 @@
 package com.bean;
 
-public class coupon {
+import java.util.Date;
+
+public class Coupon {
     private String id;
     private String userId;
     private String couponContent;
+    private Date startTime;
+    private Date endTime;
 
-    public coupon() {
+    private int percent;
+
+    public Coupon() {
     }
 
     public String getId() {
@@ -30,5 +36,29 @@ public class coupon {
 
     public void setCouponContent(String couponContent) {
         this.couponContent = couponContent;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
 }

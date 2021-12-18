@@ -56,7 +56,7 @@
                         <ul class="sf-menu" id="fh5co-primary-menu">
                             <li class="active"><a href="index.html">Home</a></li>
                             <li><a href="agent.html">Agent</a></li>
-                            <li><a href="">Order</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${userpage}">Properties</a></li>
                             <li><a href="contact.html">Contact</a></li>
                             <%
                                 String username=(String)session.getAttribute("username");
@@ -70,7 +70,7 @@
                                     <li><a href="${pageContext.request.contextPath}/user/bankcard?userid=${userid}">钱包</a></li>
                                     <li><a href="${pageContext.request.contextPath}/user/bankcard?userid=${userid}">银行卡</a></li>
                                     <li><a href="${pageContext.request.contextPath}/user/userorder?userid=${userid}">订单中心</a></li>
-                                    <li><a href="#">1234</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/user/selectcoupon?userid=${userid}">优惠券</a></li>
                                 </ul>
                             </li>
                             <% session.setAttribute("user", username);}%>

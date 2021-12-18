@@ -29,7 +29,11 @@
     </select>
 
     <update id="updateUserMoney">
-        update user_information set money=#{money} where user_name = #{userName}
+        update user_information set money=#{money} where user_identity = #{userName}
+    </update>
+
+    <update id="updateUserInfo" parameterType="com.bean.User">
+        update user_information set user_identity = #{userIdentity},user_name = #{userName},user_sex = #{userSex},user_phone = #{userPhone},user_residential_quarters = #{userResidentialQuarters},user_building_number = #{userBuildingNumber},user_house_number = #{userHouseNumber} where user_identity = #{userIdentity}
     </update>
 
 </mapper>

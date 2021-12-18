@@ -4,6 +4,7 @@ import com.bean.Bankcard;
 import com.bean.Order;
 import com.bean.User;
 import com.dao.*;
+import com.service.CouponService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class DaoTestMiao {
     private OrderMapper orderMapper;
     @Autowired
     private BankcardMapper bankcardMapper;
+    @Autowired
+    private CouponMapper couponMapper;
 
 
 
@@ -126,7 +129,19 @@ public class DaoTestMiao {
         System.out.println("dao测试结束。。。。");
     }
 
-
+    @Test
+    public void updateUserInfo(){
+        User user = new User();
+        user.setUserIdentity("huangyimiao666@gmail.com");
+        user.setUserSex("女");
+        user.setUserPhone("15700190560");
+        user.setUserName("huangmm");
+        user.setUserResidentialQuarters("15区");
+        user.setUserBuildingNumber("6");
+        user.setUserHouseNumber("401");
+        boolean flag = userMapper.updateUserInfo(user);
+        System.out.println(flag);
+    }
 
 
     /**
