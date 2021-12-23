@@ -18,13 +18,12 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.0.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:5.0.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context-support:4.3.19.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aspects:5.0.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.13" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:5.0.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.0.3.RELEASE" />
@@ -55,6 +54,10 @@
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.10" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.4" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.6" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.13" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.1" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

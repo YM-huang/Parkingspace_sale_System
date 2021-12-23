@@ -2,6 +2,7 @@ package com.service;
 
 
 import com.bean.ParkingSpace;
+import com.bean.ResidentialQuarters;
 import com.bean.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,6 +25,17 @@ public interface UserService {
 
     boolean updateUserInfo(User user);
 
+    boolean updateUserMoney(double money,String userName);
+
     List<ParkingSpace> selectParkingSpace(int pageNum, int pageSize, String search, String did);
+
+    List<ParkingSpace> selectAllParkSpace(int pageNum,int pageSize);
+
+    List<ParkingSpace> selectAllSpace();
+
+    ResidentialQuarters selectResidentialQuartersById(String did);
+
+    User userAuthentication(String userResidentialQuarters,String userBuildingNumber,String userHouseNum);
+
 
 }

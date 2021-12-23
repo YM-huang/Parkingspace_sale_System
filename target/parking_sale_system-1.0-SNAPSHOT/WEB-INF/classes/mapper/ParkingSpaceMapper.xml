@@ -14,19 +14,32 @@
     </update>
     <select id="countParkSpace" resultType="Integer">
         select count(`parking_space`.`id`) from `parking_space`,`residential_quarters` where `parking_space`.residential_quarters_id = `residential_quarters`.id and
-            `residential_quarters`.developer_id=#{did} and state = 1
+            `residential_quarters`.developer_id=#{did} and `parking_space`.state = 1
     </select>
     <select id="selectParkSpace" parameterType="java.util.Map" resultType="com.bean.ParkingSpace">
-        select * from `parking_space`,`residential_quarters`
+        select `parking_space`.* from `parking_space`,`residential_quarters`
         <where>
             `parking_space`.residential_quarters_id = `residential_quarters`.id and
             `residential_quarters`.developer_id=#{did}
             <if test="search != null and search !=''">
-                or `parking_space`.`residential_quarters_id` = #{search}
+                and `parking_space`.`residential_quarters_id` = #{search}
                 or `parking_space`.`state` = #{search}
                 or `parking_space`.`id` = #{search}
             </if>
         </where>
         LIMIT ${(pageNum-1)*pageSize},${pageSize*pageNum};
+    </select>
+    <select id="selectAllParkSpace" parameterType="java.util.Map" resultType="com.bean.ParkingSpace">
+        select `parking_space`.* from `parking_space`,`residential_quarters`
+        <where>
+            `parking_space`.residential_quarters_id = `residential_quarters`.id
+        </where>
+        LIMIT ${(pageNum-1)*pageSize},${pageSize*pageNum};
+    </select>
+    <select id="selectAllSpace" parameterType="java.util.Map" resultType="com.bean.ParkingSpace">
+        select `parking_space`.* from `parking_space`,`residential_quarters`
+        <where>
+            `parking_space`.residential_quarters_id = `residential_quarters`.id
+        </where>
     </select>
 </mapper>

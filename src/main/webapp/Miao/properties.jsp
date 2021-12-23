@@ -44,6 +44,51 @@
 
     <link rel="stylesheet" href="<%=path%>/Miao/css/style.css">
 
+    <style>
+        .pagination-zan {
+            margin: 0;
+            border-radius: 4px;
+        }
+
+        .pagination-zan li > a, .pagination-zan li > span {
+            color: #E6E6FA;
+            border: 2px solid rgb(107, 105, 214);
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-left: 10px;
+            border-radius: 4px;
+        }
+
+        .pagination-zan li > a:hover, .pagination-zan li > span:hover {
+            color: white;
+            border: 2px solid rgb(107, 105, 214);
+            background-color: rgb(107, 105, 214);
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
+
+        .pagination-zan .active a, .pagination-zan .active span {
+            color: white;
+            border: 2px solid rgb(107, 105, 214);
+            background-color: rgb(107, 105, 214);
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+        }
+
+        .pagination-zan .active a:hover, .pagination-zan .active span:hover {
+            color: white;
+            border: 2px solid rgb(107, 105, 214);
+            background-color: rgb(107, 105, 214);
+            -webkit-transition: all .3s ease;
+            -moz-transition: all .3s ease;
+            -o-transition: all .3s ease;
+            transition: all .3s ease;
+            cursor: not-allowed;
+        }
+    </style>
 
     <!-- Modernizr JS -->
     <script src="<%=path%>/Miao/js/modernizr-2.6.2.min.js"></script>
@@ -103,7 +148,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h2 class="heading-title">Our Properties</h2>
+                                        <h2 class="heading-title">Properties</h2>
                                         <p class="fh5co-lead"><i class="icon-heart3"></i><i class="icon-heart3"></i><i class="icon-heart3"></i></p>
                                     </div>
                                 </div>
@@ -126,7 +171,7 @@
                     <c:forEach items="${parklist}" var="park" varStatus="status">
                         <div class="col-md-6 animate-box">
                             <div class="property">
-                                <a href="#" class="fh5co-property" style="background-image: url(<%=path%>/Miao/images/property-1.jpg);">
+                                <a href="${pageContext.request.contextPath}/user/parkspace?parkid=${park.id}" class="fh5co-property" style="background-image: url(<%=path%>/img/${park.id}.jpg);">
                                     <span class="status">
                                         <c:if test="${park.state==1}">Sale</c:if>
                                         <c:if test="${park.state==2}">Reservation</c:if>
@@ -134,7 +179,7 @@
                                     </span>
                                     <ul class="list-details">
                                         <li>${park.id} ft sq<li>
-                                        <li>${park.views} Left</li>
+                                        <li>${park.views} views</li>
                                     </ul>
                                 </a>
                                 <div class="property-details">
@@ -146,6 +191,17 @@
                             </div>
                         </div>
                     </c:forEach>
+                </div>
+
+                <div id="zan-page" class="clearfix">
+                    <ul class="pagination pagination-zan pull-right">
+                        <c:if test="${pageNum!=1}"><li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${pageNum-1}">«</a></li></c:if>
+                        <c:forEach var="i" begin="1" end="${maxpage}" step="1">
+                            <c:if test="${pageNum==i}"><li class='active'><span>${i}</span></li></c:if>
+                            <c:if test="${pageNum!=i}"><li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${i}"><span>${i}</span></a></li></c:if>
+                        </c:forEach>
+                        <c:if test="${pageNum!=maxpage}"><li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${pageNum+1}">&raquo;</a></li></c:if>
+                    </ul>
                 </div>
             </div>
         </div>

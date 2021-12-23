@@ -1,10 +1,7 @@
 package com.controller;
 
 import com.bean.*;
-import com.service.BankcardService;
-import com.service.CouponService;
-import com.service.OrderService;
-import com.service.UserService;
+import com.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +39,9 @@ public class UserController {
 
     @Autowired
     private CouponService couponService;
+
+    @Autowired
+    private ParkingSpaceService parkingSpaceService;
 
     /**
      * 登录的控制层
@@ -81,7 +81,7 @@ public class UserController {
 
 
     /**
-     * 登录的控制层
+     * 注册的控制层
      *
      * @param username
      * @param password
@@ -121,7 +121,8 @@ public class UserController {
         session.setAttribute("username", name);
         session.setAttribute("userid", userid);
         session.setAttribute("orderlist", orderlist);
-        System.out.println(orderlist.get(0).getOrderId());
+        session.setAttribute("orderFinalState",5);
+//        System.out.println(orderlist.get(0).getOrderId());
         return "Miao/order";
     }
 
@@ -217,6 +218,7 @@ public class UserController {
      */
     @RequestMapping(value = "/addbankcard")
     public String addBankcard(@RequestParam("userid") String userid,@RequestParam("bank") String bank,@RequestParam("bankcardid") String bankcardid,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
         //当前时间
         Date nowDate = new Date();
         List<Coupon> couponlist = couponService.selectCoupon(userid);
@@ -243,10 +245,16 @@ public class UserController {
         bankcard.setBank(bank);
         bankcard.setBankcardId(bankcardid);
         bankcard.setUserId(userid);
+        List<Bankcard> bankcardlist1 = bankcardService.selectBankcard(userid);
+        for (Bankcard i : bankcardlist1) {
+            if(bankcard.equals(i.getBankcardId())){
+                session.setAttribute("insertstate", 2);
+                return "Miao/personalpage";
+            }
+        }
         boolean flag =bankcardService.insertBankcard(bankcard);
         User user = userService.selectNameById(userid);
         List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
-        HttpSession session = request.getSession();
         session.setAttribute("couponlist", couponlist);
         session.setAttribute("bankcardlist", bankcardlist);
         session.setAttribute("user", user);
@@ -269,6 +277,7 @@ public class UserController {
      */
     @RequestMapping(value = "/updateuserinfo")
     public String updateUserInfo(@RequestParam("userid") String userid,@RequestParam("useremail") String useremail,@RequestParam("username") String username,@RequestParam("userphone") String userphone,@RequestParam("sex") String sex,@RequestParam("userquarter") String userquarter,@RequestParam("userbuilding") String userbuilding,@RequestParam("userhouse") String userhouse,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
         //当前时间
         Date nowDate = new Date();
         List<Coupon> couponlist = couponService.selectCoupon(userid);
@@ -314,11 +323,16 @@ public class UserController {
             user.setUserHouseNumber(userhouse);
             user.setUserFloor(Integer.parseInt(userhouse.substring(0,1)));
         }
+        User userAut = userService.userAuthentication(user.getUserResidentialQuarters(),user.getUserBuildingNumber(),user.getUserHouseNumber());
+        if(userAut!=null&&!userAut.getUserIdentity().equals(userid)){
+            session.setAttribute("state", 2);
+            session.setAttribute("updatestate", 2);
+            return "Miao/personalpage";
+        }
 
         boolean flag =userService.updateUserInfo(user);
 
         List<Bankcard> bankcardlist = bankcardService.selectBankcard(userid);
-        HttpSession session = request.getSession();
         session.setAttribute("couponlist", couponlist);
         session.setAttribute("bankcardlist", bankcardlist);
         session.setAttribute("user", user);
@@ -376,13 +390,27 @@ public class UserController {
     }
 
     /**
+     * 跳转用户签字的控制层
+     *
+     * @param orderid
+     * @return
+     */
+    @RequestMapping(value = "/canvasUp")
+    public String canvasUp(@RequestParam("orderid") String orderid,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        session.setAttribute("orderid", orderid);
+        return "Miao/canvas";
+
+    }
+
+    /**
      * 用户签字的控制层
      *
      * @param filename
      * @return
      */
     @RequestMapping(value = "/sign" ,method= RequestMethod.POST)
-    public String upload(@RequestParam("filett") String filename, HttpServletRequest request){
+    public String upload(@RequestParam("filett") String filename, @RequestParam("orderId") String orderId, HttpServletRequest request){
 //        //将request转换成文件上传的MultipartHttpServletRequest
 //        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 //        //获取三张传过来的图片（file）
@@ -417,39 +445,81 @@ public class UserController {
 //        }
 //        return "Miao/loginSuccess";
 
+        HttpSession session = request.getSession();
         String str = filename.substring(22);
         System.out.println(str);
         String path = request.getServletContext().getRealPath("/sign");
-        GenerateImage(str, path+"/11.png");
-        return "Success";
+        File dir = new File(path);
+        System.out.println(dir.getAbsolutePath());
+        if (!dir.exists()){
+            dir.mkdirs();
+        }
+        boolean flag = GenerateImage(str, path+"/"+orderId+".png");
+        if(flag){
+            session.setAttribute("orderFinalState",2);
+            return "Miao/order";
+        }
+        else{
+            session.setAttribute("orderFinalState",3);
+            return "Miao/order";
+        }
     }
 
-    //    管理车位
+    /**
+     * 车位管理的控制层
+     *
+     * @param pageNum
+     * @return
+     */
     @RequestMapping(value = "/manageparkingSpace")
     public String selectParkingSpace(@RequestParam("pageNum") String pageNum,HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         if(pageNum.equals("") || pageNum == null || Integer.parseInt(pageNum)<1){
             pageNum="1";
         }
-//        if(pageSize.equals("") || pageSize == null){
-//            pageSize="4";
-//        }
-        String did = (String)session.getAttribute("did");
-        if(did==null || did.equals(""))
-            did="zjut@zjut";
-        System.out.println("uid:"+did);
-//        System.out.println("search:"+search);
-//        System.out.println("pageSize:"+pageSize);
+
         System.out.println("pageNum:"+pageNum);
 
-        List<ParkingSpace> list = userService.selectParkingSpace(Integer.parseInt(pageNum),4,"",did);
+        List<ParkingSpace> listmain = userService.selectAllSpace();
+        List<ParkingSpace> list = userService.selectAllParkSpace(Integer.parseInt(pageNum),4);
+
+        int maxpage = 1;
+
+        if(listmain.size()%4==0){
+            maxpage = listmain.size()/4;
+        }
+        else{
+            maxpage = listmain.size()/4+1;
+        }
+        System.out.println("maxpage:"+maxpage);
         model.addAttribute("parklist", list);
         session.setAttribute("pageSize","4");
-        session.setAttribute("pageNum",pageNum);
+        session.setAttribute("pageNum",Integer.parseInt(pageNum));
+        session.setAttribute("maxpage",maxpage);
         return "Miao/properties";
 
     }
+    /**
+     * 车位详情的控制层
+     *
+     * @param parkid
+     * @return
+     */
+    @RequestMapping(value = "/parkspace")
+    public String selectParkingSpaceById(@RequestParam("parkid") String parkid,HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        ParkingSpace parkspace = parkingSpaceService.selectParkingSpaceById(parkid);
+        String developerid=userService.selectResidentialQuartersById(parkspace.getResidentialQuartersId()).getDeveloperId();
+        session.setAttribute("parkspace",parkspace);
+        session.setAttribute("developerid",developerid);
+        return "Miao/parkinginfo";
+    }
 
+    /**
+     * 获得随机编码
+     *
+     * @return
+     */
     public static String getUUID(){
         UUID uuid=UUID.randomUUID();
         String str = uuid.toString();
@@ -486,6 +556,13 @@ public class UserController {
         // 返回Base64编码过的字节数组字符串
     }
 
+    /**
+     * 图片码转图片
+     *
+     * @param imgStr
+     * @param imgFilePath
+     * @return string
+     */
     public static boolean GenerateImage(String imgStr, String imgFilePath) {// 对字节数组字符串进行Base64解码并生成图片
         if (imgStr == null) {
             // 图像数据为空

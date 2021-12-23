@@ -17,4 +17,12 @@
     <delete id="deleteDevelopers">
         delete from developer where developer_id=#{id}
     </delete>
+
+    <select id="selectState" resultType="String">
+        select `state` from developer where developer_id=#{id}
+    </select>
+
+    <select id="selectDeveloper" resultType="com.bean.Developers">
+        select * from developer where `developer_id` = #{developerId}
+    </select>
 </mapper>

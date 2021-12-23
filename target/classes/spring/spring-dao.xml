@@ -9,6 +9,19 @@
 
     <!-- 1、配置数据库相关参数 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--配置邮件接口-->
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.qq.com"/>
+        <property name="username" value="764327916@qq.com"/>
+        <property name="password" value="gferccyfybhhbdhf"/>
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.timeout">20000</prop>
+            </props>
+        </property>
+    </bean>
 
     <!-- 2、数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -52,5 +65,6 @@
         <!-- 给出需要扫描的Dao接口-->
         <property name="basePackage" value="com.dao"/>
     </bean>
+
 
 </beans>

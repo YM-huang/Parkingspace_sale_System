@@ -7,4 +7,7 @@ public interface OrderService {
     boolean insertOrder(String parkingSpaceId,String contractSignatory,String contractInitiator);
 
     List<Order> selectUserOrder(String userIdentity);
+
+    public Order selectOrderById(String orderId);
+
 }

@@ -247,7 +247,7 @@
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="<%=path%>/developer/select_developerInfo"><i class="fa fa-user fa-fw"></i>公司信息</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
@@ -280,49 +280,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a  href="<%=path%>/Qiang/userlist.jsp"><i class="fa fa-bar-chart-o"></i>业主管理</a>
+                    <a  href="<%=path%>/Qiang/activitylist.jsp"><i class="fa fa-bar-chart-o"></i>活动管理</a>
                 </li>
                 <li>
                     <a class="active-menu" href="<%=path%>/Qiang/orderlist.jsp"><i class="fa fa-desktop"></i>订单管理</a>
                 </li>
-
                 <li>
-                    <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
-                </li>
-                <li>
-                    <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
-                </li>
-
-
-                <li>
-                    <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+                    <a href="<%=path%>/Qiang/residential.jsp"><i class="fa fa-desktop"></i>小区管理</a>
                 </li>
             </ul>
 
@@ -383,7 +347,7 @@
                                                         <th>已交定金</th>
                                                         <th>订单状态</th>
                                                         <th>尾款时间</th>
-                                                        <th>详情信息</th>
+                                                        <th>详情操作</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -394,13 +358,17 @@
                                                             <th><fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd HH:mm:ss"/></th>
                                                             <th>${order.deposit}</th>
                                                             <th><c:if test="${order.state==1}">待处理</c:if>
-                                                                <c:if test="${order.state==2}">尾款阶段</c:if>
-                                                                <c:if test="${order.state==3}">交易完成</c:if>
-                                                                <c:if test="${order.state==4}">交易失败</c:if></th>
+                                                                <c:if test="${order.state==2}">等待用户确认</c:if>
+                                                                <c:if test="${order.state==3}">尾款阶段</c:if>
+                                                                <c:if test="${order.state==4}">交易完成</c:if>
+                                                                <c:if test="${order.state==5}">订单取消</c:if>
+                                                                <c:if test="${order.state==6}">订单超时</c:if>
+                                                            </th>
                                                             <th><fmt:formatDate value="${order.finalPaymentTime}" pattern="yyyy/MM/dd"/></th>
-                                                            <th><a style="color: #0b6cbc" data-toggle="modal" data-target="#${status.count}">处理订单</a></th>
+
+                                                            <th><a style="color: #0b6cbc" data-toggle="modal" data-target="#${status.count}">详情处理</a></th>
                                                         </tr>
-                                                        <div class="modal fade" id="${status.count}" tabindex="-1" role="dialog"
+                                                    <div class="modal fade" id="${status.count}" tabindex="-1" role="dialog"
                                                          aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -491,6 +459,13 @@
                                                                         </div>
                                                                     </div>
                                                                     <br>
+                                                                    <br>
+                                                                    <div class="row">
+                                                                        <div style="text-align: center">
+                                                                            <img src="<%=path%>/contract/${order.orderId}.jpg" alt="合同图片" class="img-thumbnail"  style="width:40%;height: 80%;">
+                                                                            <img src="<%=path%>/sign/${order.orderId}.png" alt="签名图片" class="img-thumbnail"  style="width:40%;height: 80%;">
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="modal-footer">
                                                                         <button class="btn btn-info" type="submit">
                                                                             <i class="icon-ok bigger-110"></i>

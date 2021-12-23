@@ -2,8 +2,10 @@ package com.service.impl;
 
 import com.bean.*;
 import com.dao.*;
+import com.event.DeveloperRegisterAfterEvent;
 import com.service.AdministratorsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,6 +29,8 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     private AdminDeveloperBillMapper adminDeveloperBillMapper;
     @Autowired
     private ParkingSpaceMapper parkingSpaceMapper;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Override
     public Administrators selectAdministratorsByName(String administratorsName) {
@@ -67,13 +71,11 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     @Override
     public boolean addDeveloper_administrator(String developerId) {
         Developer_administrator developer_administrator=new Developer_administrator();
-        developer_administrator.setRole("总管");
+        developer_administrator.setRole("管理员");
         developer_administrator.setPassword("123");
         developer_administrator.setDeveloperId(developerId);
-        //生成ID号
-        long  timeNew =  System.currentTimeMillis()/ 1000; // 10位数的时间戳
-        String DA="DA"+timeNew;
-        developer_administrator.setId(DA);
+        //生成ID号,这里和开发商id同样
+        developer_administrator.setId(developerId);
         return developerMapper.insertDeveloper_administrator(developer_administrator);
     }
 
@@ -110,7 +112,7 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         Administrators administrators = new Administrators();
         administrators=administratorsMapper.selectAdministratorsByName(administratorsName);
         double adminMoney=administrators.getMoney()-deposit;
-        if(orderMapper.updateOrderState(4,orderId)&&userMapper.updateUserMoney(moneys,userName)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)){
+        if(orderMapper.updateOrderState(5,orderId)&&userMapper.updateUserMoney(moneys,userName)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)){
             System.out.println("状态修改成功");
             System.out.println("用户定金退款成功");
             System.out.println("管理员定金扣除成功");
@@ -160,7 +162,7 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         String ADB="ADB"+timeNew;
         adminDeveloperBill.setId(ADB);
         adminDeveloperBill.setMoney(deposit*0.95+finalPrice*0.95);
-        if(orderMapper.updateOrderState(3,orderId)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)&&adminDeveloperBillMapper.insertAdminDeveloperBill(adminDeveloperBill)){
+        if(orderMapper.updateOrderState(4,orderId)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)&&adminDeveloperBillMapper.insertAdminDeveloperBill(adminDeveloperBill)){
             System.out.println("状态修改成功");
             System.out.println("后台抽成成功");
             System.out.println("账单插入成功");
@@ -173,11 +175,8 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     }
 
     @Override
-    public List<ExamineApprove> selectExamineApprove(int pageNum, int pageSize, String adminId, int state) {
-        Administrators administrators=new Administrators();
-        administrators=administratorsMapper.selectAdministratorsByName(adminId);
-        String id=administrators.getAdministratorsId();
-        return examineApproveMapper.selectExamineApprove(pageNum,pageSize,id,state);
+    public List<ExamineApprove> selectExamineApprove(int pageNum, int pageSize, int state) {
+        return examineApproveMapper.selectExamineApprove(pageNum,pageSize,state);
     }
 
     @Override
@@ -189,12 +188,15 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     }
 
     @Override
-    public boolean unpassfile(int state, String eId) {
-        return examineApproveMapper.updateExamineApproveState(1,eId);
+    public boolean unpassfile(int state, String eId,String adminName) {
+        Administrators administrators=new Administrators();
+        administrators=administratorsMapper.selectAdministratorsByName(adminName);
+        String id=administrators.getAdministratorsId();
+        return examineApproveMapper.updateExamineApproveState(1,eId,id);
     }
 
     @Override
-    public boolean passfile(int state, String eId) {
+    public boolean passfile(int state, String eId,String adminName) {
         ExamineApprove examineApprove=new ExamineApprove();
         examineApprove=examineApproveMapper.selectExamineApproveById(eId);
         //获取申请文件中开发商ID，姓名
@@ -206,6 +208,9 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         developers.setDeveloperId(developerId);
         developers.setDeveloperName(developerName);
         developers.setMoney(0);
+        //消息机制，发送邮件通知开发商
+        System.out.println("注册成功");
+        applicationContext.publishEvent(new DeveloperRegisterAfterEvent(developerId));
         //developersMapper.insertDevelopers(developers);
         //添加开发商管理员
         Developer_administrator developer_administrator=new Developer_administrator();
@@ -219,7 +224,10 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         //developerMapper.insertDeveloper_administrator(developer_administrator);
         //修改申请文件状态
         //examineApproveMapper.updateExamineApproveState(2,eId);
-        return (developersMapper.insertDevelopers(developers)&&developerMapper.insertDeveloper_administrator(developer_administrator)&&examineApproveMapper.updateExamineApproveState(2,eId));
+        Administrators administrators=new Administrators();
+        administrators=administratorsMapper.selectAdministratorsByName(adminName);
+        String id=administrators.getAdministratorsId();
+        return (developersMapper.insertDevelopers(developers)&&developerMapper.insertDeveloper_administrator(developer_administrator)&&examineApproveMapper.updateExamineApproveState(2,eId,id));
 
     }
 
@@ -241,5 +249,12 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     @Override
     public boolean offline(String dId) {
         return developersMapper.deleteDevelopers(dId);
+    }
+
+    @Override
+    public void sendMail(String developerid) {
+        System.out.println("注册成功");
+        //System.out.println(developerid);
+        applicationContext.publishEvent(new DeveloperRegisterAfterEvent(developerid));
     }
 }

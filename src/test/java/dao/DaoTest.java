@@ -1,9 +1,6 @@
 package dao;
 
-import com.bean.ExamineApprove;
-import com.bean.Order;
-import com.bean.OrderStatistic;
-import com.bean.ParkingSpace;
+import com.bean.*;
 import com.dao.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +38,10 @@ public class DaoTest {
     private ExamineApproveMapper examineApproveMapper;
     @Autowired
     private DevelopersMapper developersMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
+    @Autowired
+    private ResidentialQuartersMapper residentialQuartersMapper;
     /**
      * 1、登录时通过用户名来确认用户名是否存在
      * <p>
@@ -150,5 +151,66 @@ public class DaoTest {
         System.out.println("dao测试结束。。。。");
     }
 
+    @Test
+    public void addActivity() {
+        System.out.println("dao测试开始。。。。");
+        Activity activity = new Activity();
+        activity.setActivityId("002");
+        activity.setActivityName("开业盛典");
+        activity.setActivityDeveloperId("zjut");
+        activity.setActivityContent(300);
+        activity.setActivityDiscount(0.8);
+        activityMapper.addActivity(activity);
+        System.out.println("dao测试结束。。。。");
+    }
 
+    @Test
+    public void deleteActivity() {
+        System.out.println("dao测试开始。。。。");
+        activityMapper.deleteActivity("001");
+        System.out.println("dao测试结束。。。。");
+    }
+
+    @Test
+    public void selectActivity() {
+        System.out.println("dao测试开始。。。。");
+        List<Activity> list = activityMapper.selectActivity(1,5,"","zjut");
+        System.out.println(list.get(0).getActivityContent());
+        System.out.println(list.get(1).getActivityId());
+        System.out.println("dao测试结束。。。。");
+    }
+
+    @Test
+    public void selectState() {
+        System.out.println("dao测试开始。。。。");
+        String state = developersMapper.selectState("zjut");
+        System.out.println(state);
+        System.out.println("dao测试结束。。。。");
+    }
+
+    @Test
+    public void selectResidentialQuarters() {
+        System.out.println("dao测试开始。。。。");
+        ResidentialQuarters residentialQuarters = new ResidentialQuarters();
+        residentialQuarters.setId("1");
+        residentialQuarters.setResidentialQuartersName("夏树山庄");
+        residentialQuarters.setState("运营");
+        residentialQuarters.setDeveloperId("zjut");
+        System.out.println(residentialQuartersMapper.insertResidentialQuarters(residentialQuarters));
+        System.out.println("dao测试结束。。。。");
+    }
+
+    @Test
+    public void selectRole() {
+        System.out.println("dao测试开始。。。。");
+        System.out.println(developerMapper.select_roleInfo("zjut"));
+        System.out.println("dao测试结束。。。。");
+    }
+
+    @Test
+    public void modify_password() {
+        System.out.println("dao测试开始。。。。");
+        System.out.println(developerMapper.modify_password("1234","1234"));
+        System.out.println("dao测试结束。。。。");
+    }
 }

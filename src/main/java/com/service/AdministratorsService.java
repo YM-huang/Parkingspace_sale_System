@@ -16,14 +16,16 @@ public interface AdministratorsService {
     boolean cancelOrder(String orderId,String administratorsName);
     boolean timeoutOrder(String orderId,String administratorsName);
     boolean finishOrder(String orderId,String administratorsName);
-    List<ExamineApprove> selectExamineApprove(int pageNum,int pageSize,String adminId,int state);
+    List<ExamineApprove> selectExamineApprove(int pageNum,int pageSize,int state);
     List<ExamineApprove> selectHisExamineApprove(int pageNum,int pageSize,String adminId,int state1,int state2);
-    boolean unpassfile(int state,String eId);
-    boolean passfile(int state,String eId);
+    boolean unpassfile(int state,String eId,String adminName);
+    boolean passfile(int state,String eId,String adminName);
     List<Developers> selectDevelopers(int pageNum,int pageSize);
     boolean unseal(String dId);
     boolean seal(String dId);
     boolean offline(String dId);
+    public void sendMail(String developerid);
+
 
 
 }

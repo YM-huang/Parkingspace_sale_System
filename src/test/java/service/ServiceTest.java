@@ -1,9 +1,6 @@
 package service;
 
-import com.bean.Administrators;
-import com.bean.Developer_administrator;
-import com.bean.Order;
-import com.bean.OrderStatistic;
+import com.bean.*;
 import com.service.DeveloperService;
 import com.service.ParkingSpaceService;
 import com.service.UserService;
@@ -45,8 +42,7 @@ public class ServiceTest {
     @Test
     public void loginDeveloper(){
         System.out.println("service测试开始。。。");
-        Developer_administrator developer_administrator=developerService.login("zjut","123");
-        System.out.println(developer_administrator);
+        System.out.println( developerService.login("zjut","123"));
     }
     @Test
     public void insertParkSpace(){
@@ -65,9 +61,9 @@ public class ServiceTest {
     @Test
     public void updateOrder() throws ParseException {
         System.out.println("service测试开始。。。");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式
         Date date =new Date();
-        System.out.println(developerService.updateOrder("111","小强","HT21312","123456", dateFormat.format(date),"zjut"));
+        System.out.println(developerService.updateOrder("123","小强","HT21312","123456", dateFormat.format(date),"zjut","001"));
         System.out.println("测试结束");
     }
     @Test
@@ -99,5 +95,11 @@ public class ServiceTest {
         System.out.println(list.get(4).getDate());
         System.out.println(list.get(5).getDate());
         System.out.println(list.get(6).getDate());
+    }
+    @Test
+    public void  selectActivity(){
+        List<Activity> list = developerService.selectActivity(1,5,"","zjut");
+        System.out.println(list.get(0).getActivityId());
+        System.out.println(list.get(1).getActivityContent());
     }
 }

@@ -7,13 +7,13 @@
     </insert>
 
     <select id="selectOrder" parameterType="java.util.Map" resultType="com.bean.Order">
-        select * from `order`,`parking_space`,`residential_quarters`
+        select `order`.* from `order`,`parking_space`,`residential_quarters`
     <where>
         `order`.parking_space_id=`parking_space`.id and
         `parking_space`.residential_quarters_id = `residential_quarters`.id and
         `residential_quarters`.developer_id=#{did}
         <if test="search != null and search !=''">
-            or `order`.`state` like concat('%', #{search}, '%')
+            and `order`.`state` like concat('%', #{search}, '%')
             or `order`.`order_time` like concat('%', #{search}, '%')
             or `order`.`order_id` = #{search}
         </if>

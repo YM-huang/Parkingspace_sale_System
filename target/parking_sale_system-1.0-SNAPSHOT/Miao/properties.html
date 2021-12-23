@@ -46,6 +46,52 @@
 	
 	<link rel="stylesheet" href="css/style.css">
 
+		<style>
+			.pagination-zan {
+				margin: 0;
+				border-radius: 4px;
+			}
+
+			.pagination-zan li > a, .pagination-zan li > span {
+				color: #E6E6FA;
+				border: 2px solid rgb(107, 105, 214);
+				background-color: rgba(255, 255, 255, 0.1);
+				margin-left: 10px;
+				border-radius: 4px;
+			}
+
+			.pagination-zan li > a:hover, .pagination-zan li > span:hover {
+				color: white;
+				border: 2px solid rgb(107, 105, 214);
+				background-color: rgb(107, 105, 214);
+				-webkit-transition: all .3s ease;
+				-moz-transition: all .3s ease;
+				-o-transition: all .3s ease;
+				transition: all .3s ease;
+			}
+
+			.pagination-zan .active a, .pagination-zan .active span {
+				color: white;
+				border: 2px solid rgb(107, 105, 214);
+				background-color: rgb(107, 105, 214);
+				-webkit-transition: all .3s ease;
+				-moz-transition: all .3s ease;
+				-o-transition: all .3s ease;
+				transition: all .3s ease;
+			}
+
+			.pagination-zan .active a:hover, .pagination-zan .active span:hover {
+				color: white;
+				border: 2px solid rgb(107, 105, 214);
+				background-color: rgb(107, 105, 214);
+				-webkit-transition: all .3s ease;
+				-moz-transition: all .3s ease;
+				-o-transition: all .3s ease;
+				transition: all .3s ease;
+				cursor: not-allowed;
+			}
+		</style>
+
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -232,6 +278,24 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div id="zan-page" class="clearfix">
+					<ul class="pagination pagination-zan pull-right">
+
+						<li><a href="#">«</a></li>
+						<li><a href='#'>N3</a></li>
+						<li><a href='#'>N2</a></li>
+						<li class='active'><span>N1</span></li>
+						<li><a href='#'>1</a></li>
+						<li><a href='#'>2</a></li>
+						<li><a href='#'>3</a></li>
+						<li><a href='#'>4</a></li>
+						<li><a href='#'>5</a></li>
+						<li><a href='#'>6</a></li>
+						<li><span>...</span></li>
+						<li><a href='#'>71</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>

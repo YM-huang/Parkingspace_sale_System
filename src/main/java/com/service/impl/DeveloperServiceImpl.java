@@ -29,10 +29,24 @@ public class DeveloperServiceImpl implements DeveloperService {
     private ExamineApproveMapper examineApproveMapper;
     @Autowired
     private DevelopersMapper developersMapper;
+    @Autowired
+    private ActivityMapper activityMapper;
+    @Autowired
+    private ResidentialQuartersMapper residentialQuartersMapper;
 
     @Override
     public Developer_administrator login(String username, String password){
-        return developerMapper.login(username,password);
+        Developer_administrator developer_administrator= developerMapper.login(username,password);
+        if(developer_administrator!=null){
+            String state=developersMapper.selectState(developer_administrator.getDeveloperId());
+            if(state.equals("正常")){
+                return developer_administrator;
+            }
+            else if(state.equals("封号")){
+                return null;
+            }
+        }
+        return null;
     }
 
 //    添加上架车位
@@ -50,15 +64,16 @@ public class DeveloperServiceImpl implements DeveloperService {
         parkingSpace.setPreferentialMeasures(null);
         return parkingSpaceMapper.insertParkSpace(parkingSpace);
     }
+
     @Override
     public List<Order> selectOrder(int pageNum, int pageSize, String search,String did){
         return orderMapper.selectOrder(pageNum,pageSize,search,did);
     }
 
-    //修改订单
+    //修改处理订单
     @Override
     @Transactional
-    public boolean updateOrder(String orderId,String contractInitiator, String contractContent, String finalPrice, String finalPaymentTime,String did) throws ParseException {
+    public boolean updateOrder(String orderId,String contractInitiator, String contractContent, String finalPrice, String finalPaymentTime,String did,String parkingSpaceId) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//可以方便地修改日期格式
         List<Order> list = orderMapper.selectOrder(1,1,orderId,did);
         Order order = (Order) list.get(0);
@@ -67,7 +82,32 @@ public class DeveloperServiceImpl implements DeveloperService {
         }
         order.setContractInitiator(contractInitiator);
         order.setContractContent(contractContent+".jpg");
-        order.setFinalPrice(Double.parseDouble(finalPrice));
+//        如果传来的价格为空
+        if(finalPrice == null || finalPrice.equals("")){
+            //        通过活动优惠计算价格
+            System.out.println("通过活动计算价格");
+            ParkingSpace parkingSpace = parkingSpaceMapper.selectParkingSpaceById(parkingSpaceId);
+            Double price =  parkingSpace.getPrice();
+            List<Activity> list_activity = activityMapper.selectAllActivity(parkingSpaceId);
+            Iterator<Activity> it = list_activity.iterator();
+            while(it.hasNext()) {
+                Activity activity =it.next();
+                if(activity.getActivityCategory().equals("打折")){
+                    price = price*activity.getActivityDiscount();
+                }
+                else if(activity.getActivityCategory().equals("满减")){
+//                向下取整
+                    int del= (int) Math.floor(price/activity.getActivityContent());
+                    price=price-activity.getActivityDiscount()*del;
+                }
+            }
+            order.setFinalPrice(price);
+        }
+        else{
+//            传过来的价格不为空则按照传过来的价格计算
+            System.out.println("通过值计算价格");
+            order.setFinalPrice(Double.parseDouble(finalPrice));
+        }
         order.setFinalPaymentTime(dateFormat.parse(finalPaymentTime));
         order.setState(2);
         if(orderMapper.updateOrder(order)){
@@ -86,7 +126,7 @@ public class DeveloperServiceImpl implements DeveloperService {
         examineApprove.setDeveloperName(developerName);
         examineApprove.setId(id);
         examineApprove.setFile(id+".jpg");
-        examineApprove.setState(0);
+        examineApprove.setState(3);
         if(examineApproveMapper.insertExamineApprove(examineApprove)){
             return true;
         }
@@ -148,4 +188,107 @@ public class DeveloperServiceImpl implements DeveloperService {
     public List<ParkingSpace> selectParkingSpace(int pageNum, int pageSize, String search,String did){
         return parkingSpaceMapper.selectParkSpace(pageNum,pageSize,search,did);
     }
+
+//    活动管理
+    @Override
+    @Transactional
+    public List<Activity> selectActivity(int pageNum,int pageSize,String search,String did){
+        return activityMapper.selectActivity(pageNum,pageSize,search,did);
+    }
+//    活动添加
+    @Override
+    @Transactional
+    public boolean addActivity(String activity_name,Integer activity_content,String activity_category,Double activity_discount,String did,String activity_residential_quarters_id){
+        Activity activity=new Activity();
+        //生成活动编号
+        long  timeNew =  System.currentTimeMillis()/ 1000; // 10位数的时间戳
+        String AC="AC"+timeNew;
+        activity.setActivityId(AC);
+        if(activity_content != null && activity_content != 0){
+            activity.setActivityContent(activity_content);
+        }
+        activity.setActivityName(activity_name);
+        activity.setActivityDiscount(activity_discount);
+        activity.setActivityCategory(activity_category);
+        activity.setActivityDeveloperId(did);
+        if(activity_residential_quarters_id!=null && !activity_residential_quarters_id.equals("")){
+            activity.setActivityResidentialQuartersId(activity_residential_quarters_id);
+        }
+        return activityMapper.addActivity(activity);
+    }
+
+//    活动删除
+    @Override
+    @Transactional
+    public boolean deleteActivity(String activity_id){
+        return activityMapper.deleteActivity(activity_id);
+    }
+
+//    活动应用查找所有活动
+    @Override
+    @Transactional
+    public List<Activity> selectAllActivity(String did){
+    return activityMapper.selectAllActivity(did);
 }
+
+//查询所有小区
+    @Override
+    @Transactional
+    public List<ResidentialQuarters> selectAllResidentialQuarters(String did){
+        return residentialQuartersMapper.selectResidentialQuarters(did);
+    }
+
+//    添加小区
+    @Override
+    @Transactional
+    public boolean addResidentialQuarters(String developer_id,String residential_quarters_name,String state){
+        long  timeNew =  System.currentTimeMillis()/ 1000; // 10位数的时间戳
+        String RQ="RQ"+timeNew;
+        ResidentialQuarters residentialQuarters = new ResidentialQuarters();
+        residentialQuarters.setId(RQ);
+        residentialQuarters.setDeveloperId(developer_id);
+        residentialQuarters.setResidentialQuartersName(residential_quarters_name);
+        residentialQuarters.setState(state);
+        if(residentialQuartersMapper.insertResidentialQuarters(residentialQuarters)){
+            return true;
+        }
+        return false;
+    }
+
+//    更改小区状态
+    @Override
+    @Transactional
+    public boolean updateResidentialQuarters_del(String id,String state){
+        return residentialQuartersMapper.updateResidentialQuarters(id,state);
+    }
+
+    //查询开发商个人信息一
+    @Override
+    @Transactional
+    public Developers selectDeveloperInfo1(String id){
+        return developersMapper.selectDeveloper(id);
+    }
+
+    //查询登录账号个人西信息二
+    @Override
+    @Transactional
+    public Developer_administrator selectDeveloperInfo2(String id){
+        return developerMapper.select_roleInfo(id);
+    }
+
+    @Override
+    @Transactional
+    public boolean modifyPassword(String uid,String old_pwd,String new_pwd1,String new_pwd2){
+        if(developerMapper.login(uid,old_pwd)!=null){
+            if(new_pwd1.equals(new_pwd2)){
+                return developerMapper.modify_password(uid,new_pwd1);
+            }
+            return false;
+        }
+        return false;
+
+
+    }
+}
+
+

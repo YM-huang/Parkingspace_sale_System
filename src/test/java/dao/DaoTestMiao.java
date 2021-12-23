@@ -143,20 +143,37 @@ public class DaoTestMiao {
         System.out.println(flag);
     }
 
+    @Test
+    public void updateUserMoney(){
+        boolean flag = userMapper.updateUserMoney(20000,"huangyimiao666@gmail.com");
+        System.out.println(flag);
+    }
+
+    @Test
+    public void userAuthentication(){
+        User user1 = userMapper.userAuthentication("15区","6","401");
+        if(user1==null){
+            System.out.println("fuifufi");
+        }
+        else{
+            System.out.println(user1.getUserName());
+        }
+    }
+
 
     /**
      * 2、注册时往user表里面插入数据
      */
-    /*
-    @Test
-    public void insertUser(){
-        System.out.println("dao测试开始。。。。");
-        User user = new User();
-        user.setUsername("王浩");
-        user.setPassword("123");
-        System.out.println(userMapper.insertUser(user));
-        System.out.println("到测试结束。。。。");
-    }
+
+//    @Test
+//    public void insertUser(){
+//        System.out.println("dao测试开始。。。。");
+//        User user = new User();
+//        user.setUsername("王浩");
+//        user.setPassword("123");
+//        System.out.println(userMapper.insertUser(user));
+//        System.out.println("到测试结束。。。。");
+//    }
 
 //    @Test
 //    public void selectUserByAdministratorsName(){
@@ -165,19 +182,19 @@ public class DaoTestMiao {
 //        administrators =administratorsMapper.selectAdministratorsByName("lihua");
 //        System.out.println(administrators.getAdministratorsName()+administrators.getAdministratorsPassword());
 //    }
-    /*
-    @Test
-    public void updateAdministratorsMoney(){
-        System.out.println("修改开始");
-        Administrators administrators =new Administrators();
-        administrators =administratorsMapper.selectAdministratorsByName("lihua");
-        double moneys=3000+administrators.getMoney();
-        System.out.println(moneys);
 
-        administratorsMapper.updateAdministratorsMoney(moneys,"lihua");
-    }
+//    @Test
+//    public void updateAdministratorsMoney(){
+//        System.out.println("修改开始");
+//        Administrators administrators =new Administrators();
+//        administrators =administratorsMapper.selectAdministratorsByName("lihua");
+//        double moneys=3000+administrators.getMoney();
+//        System.out.println(moneys);
+//
+//        administratorsMapper.updateAdministratorsMoney(moneys,"lihua");
+//    }
 
-     */
+
 
     /**
      * 2、注册时往user表里面插入数据

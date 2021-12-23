@@ -11,4 +11,6 @@ public interface DevelopersMapper {
     boolean updateDevelopersState(@Param("state") String state,@Param("id") String id);
     List<Developers> selectDevelopers(@Param("pageNum") int pageNum,@Param("pageSize") int pageSize);
     boolean deleteDevelopers(@Param("id") String id);
+    String selectState(@Param("id") String id);
+    Developers selectDeveloper(@Param("developerId") String developerId);
 }

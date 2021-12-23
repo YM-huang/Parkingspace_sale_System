@@ -15,4 +15,9 @@ public interface ParkingSpaceMapper {
     Integer countParkSpace(@Param("did") String did);
 
     List<ParkingSpace> selectParkSpace(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize, @Param("search") String search, @Param("did") String did);
+
+    List<ParkingSpace> selectAllParkSpace(@Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    List<ParkingSpace> selectAllSpace();
+
 }

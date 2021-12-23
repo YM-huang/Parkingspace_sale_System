@@ -66,58 +66,9 @@
                 <li>
                     <a href="<%=path%>/Da/developerlist.jsp"><i class="fa fa-desktop"></i> 开发商信息处理</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i> 客服信息</a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">信息查看</a>
-                        </li>
-                        <li>
-                            <a href="#">信息回复</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-qrcode"></i> 订单处理</a>
-                </li>
 
                 <li>
                     <a href="admininfo.jsp"><i class="fa fa-table"></i> 个人信息</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit"></i> Forms </a>
-                </li>
-
-
-                <li>
-                    <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                 </li>
             </ul>
 
@@ -202,7 +153,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div style="text-align: center">
-                                                                        <img src="<%=path%>/file/${examineApprove.file}.jpg" alt="申请文件图片" class="img-thumbnail"  style="width:80%;height: 80%;">
+                                                                        <img src="<%=path%>/file/${examineApprove.file}" alt="申请文件图片" class="img-thumbnail"  style="width:80%;height: 80%;">
                                                                     </div>
                                                                     <h2>文件信息</h2>
 

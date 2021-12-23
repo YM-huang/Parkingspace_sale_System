@@ -1,8 +1,10 @@
 package com.service.impl;
 
 import com.bean.ParkingSpace;
+import com.bean.ResidentialQuarters;
 import com.bean.User;
 import com.dao.ParkingSpaceMapper;
+import com.dao.ResidentialQuartersMapper;
 import com.dao.UserMapper;
 import com.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private ParkingSpaceMapper parkingSpaceMapper;
+    @Autowired
+    private ResidentialQuartersMapper residentialQuartersMapper;
 
 
     @Override
@@ -52,12 +56,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUserInfo(User user){return userMapper.updateUserInfo(user);};
 
-    //    车位管理
+    @Override
+    public boolean updateUserMoney(double money,String userName){return userMapper.updateUserMoney(money,userName);};
+
+    @Override
+    public User userAuthentication(String userResidentialQuarters,String userBuildingNumber,String userHouseNum){return userMapper.userAuthentication(userResidentialQuarters,userBuildingNumber,userHouseNum);};
+
+    //车位管理
     @Override
     @Transactional
     public List<ParkingSpace> selectParkingSpace(int pageNum, int pageSize, String search, String did){
         return parkingSpaceMapper.selectParkSpace(pageNum,pageSize,search,did);
     }
+
+    //车位管理2
+    @Override
+    @Transactional
+    public List<ParkingSpace> selectAllParkSpace(int pageNum,int pageSize){return parkingSpaceMapper.selectAllParkSpace(pageNum,pageSize);};
+
+    //所有车位
+    @Override
+    @Transactional
+    public List<ParkingSpace> selectAllSpace(){return parkingSpaceMapper.selectAllSpace();};
+
+    @Override
+    public ResidentialQuarters selectResidentialQuartersById(String did){return residentialQuartersMapper.selectResidentialQuartersById(did);};
 
 
 

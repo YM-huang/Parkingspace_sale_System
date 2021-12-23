@@ -5,6 +5,7 @@ import com.bean.ParkingSpace;
 import com.dao.OrderMapper;
 import com.dao.ParkingSpaceMapper;
 import com.service.OrderService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +44,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> selectUserOrder(String userIdentity){return orderMapper.selectUserOrder(userIdentity);};
+
+    @Override
+    public Order selectOrderById(String orderId){return orderMapper.selectOrderById(orderId);};
 }

@@ -3,6 +3,7 @@ import com.bean.*;
 import com.service.AdministratorsService;
 import com.service.OrderService;
 import com.service.ParkingSpaceService;
+import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ public class AdministratorsController {
 
     @Autowired
     private ParkingSpaceService parkingSpaceService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestParam(value = "adminName") String adminName,@RequestParam(value = "adminPassword") String adminPassword, HttpServletRequest request, Model model){
@@ -64,28 +68,45 @@ public class AdministratorsController {
         }
     }
     //生成订单
-    @RequestMapping(value = "/GenerateOrder",method = RequestMethod.POST)
-    public void GenerateOrder(@RequestParam(value = "parkingSpaceId") String parkingSpaceId,@RequestParam(value = "contractSignatory") String contractSignatory,@RequestParam(value = "contractInitiator") String contractInitiator,HttpServletRequest request){
-        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator)){
-            System.out.println("生成订单成功");
-        }
-        else {
-        System.out.println("订单生成失败");
-     }
+    @RequestMapping(value = "/GenerateOrder")
+    public String GenerateOrder(@RequestParam(value = "parkingSpaceId") String parkingSpaceId,@RequestParam(value = "contractSignatory") String contractSignatory,@RequestParam(value = "contractInitiator") String contractInitiator,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = userService.selectNameById(contractSignatory);
+        Double usermoney = user.getMoney();
         double money;
         ParkingSpace parkingSpace;
         parkingSpace = parkingSpaceService.selectParkingSpaceById(parkingSpaceId);
         money=parkingSpace.getPrice()*0.3;
+        if(usermoney<money){
+            //余额不足
+            session.setAttribute("orderstate",1);
+            return "Miao/parkinginfo";
+        }
+        else{
+            usermoney = usermoney-money;
+            userService.updateUserMoney(usermoney,user.getUserIdentity());
+        }
+        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator)){
+            System.out.println("生成订单成功");
+//            return "Miao/properties";
+        }
+        else {
+            System.out.println("订单生成失败");
+//            return "Miao/properties";
+        }
         if(parkingSpaceService.updateParkSpaceState(2,parkingSpaceId)){
             System.out.println("车位状态修改成功");
         }
-        HttpSession session = request.getSession();
         String adminName=(String) session.getAttribute("adminName");
         if(administratorsService.updateAdministratorsMoney(money,adminName)){
+            session.setAttribute("orderstate",2);
             System.out.println("定金入账成功");
+            return "Miao/parkinginfo";
         }
         else {
+            session.setAttribute("orderstate",3);
             System.out.println("定金入账失败");
+            return "Miao/parkinginfo";
         }
 
     }
@@ -103,15 +124,32 @@ public class AdministratorsController {
 
     }
     //完成订单
-    @RequestMapping(value = "/FinishOrder",method = RequestMethod.POST)
-    public void FinishOrder(@RequestParam(value = "OrderId") String orderId,HttpServletRequest request){
+    @RequestMapping(value = "/FinishOrder")
+    public String FinishOrder(@RequestParam(value = "OrderId") String orderId,@RequestParam(value = "userId") String userId,HttpServletRequest request){
         HttpSession session = request.getSession();
         String adminName=(String) session.getAttribute("adminName");
+        User user = userService.selectNameById(userId);
+        Double usermoney = user.getMoney();
+        Order order=orderService.selectOrderById(orderId);
+        double finalPrice=order.getFinalPrice();
+        if(usermoney<finalPrice){
+            //余额不足
+            session.setAttribute("orderFinalState",1);
+            return "Miao/order";
+        }
+        else{
+            usermoney = usermoney-finalPrice;
+            userService.updateUserMoney(usermoney,user.getUserIdentity());
+        }
         if(administratorsService.finishOrder(orderId,adminName)){
             System.out.println("订单完成");
+            session.setAttribute("orderFinalState",1);
+            return "Miao/order";
         }
         else {
             System.out.println("订单完成");
+            session.setAttribute("orderFinalState",1);
+            return "Miao/order";
         }
     }
     //查看已审批文件
@@ -149,7 +187,7 @@ public class AdministratorsController {
         System.out.println("adminName:"+adminName);
         System.out.println("pageSize:"+pageSize);
         System.out.println("pageNum:"+pageNum);
-        List<ExamineApprove> list=administratorsService.selectExamineApprove(Integer.parseInt(pageNum),Integer.parseInt(pageSize),adminName,3);
+        List<ExamineApprove> list=administratorsService.selectExamineApprove(Integer.parseInt(pageNum),Integer.parseInt(pageSize),3);
         session.setAttribute("examineApprovelist", list);
         session.setAttribute("pageSize",pageSize);
         session.setAttribute("pageNum",pageNum);
@@ -157,16 +195,32 @@ public class AdministratorsController {
     }
     //通过申请文件
     @RequestMapping(value = "/passfile",method = RequestMethod.POST)
-    public String passfile(@RequestParam("eid") String eid){
+    public String passfile(@RequestParam("eid") String eid,HttpServletRequest request){
         System.out.println(eid);
-        administratorsService.passfile(2,eid);
+        HttpSession session = request.getSession();
+        String adminName=(String) session.getAttribute("adminName");
+        try{
+            if(administratorsService.passfile(2,eid,adminName)){
+                String message="通过成功";
+                session.setAttribute("message",message);
+                return "/Da/unapprovalFileList";
+            }
+        }
+        catch (Exception e){
+            session.setAttribute("message", "处理失败！");
+            return "/Da/unapprovalFileList";
+        }
+        session.setAttribute("message", "处理失败！");
         return "/Da/unapprovalFileList";
+
     }
     //不通过申请文件
     @RequestMapping(value = "/unpassfile",method = RequestMethod.POST)
-    public String unpassfile(@RequestParam("eid") String eid){
+    public String unpassfile(@RequestParam("eid") String eid,HttpServletRequest request){
         System.out.println(eid);
-        administratorsService.unpassfile(1,eid);
+        HttpSession session = request.getSession();
+        String adminName=(String) session.getAttribute("adminName");
+        administratorsService.unpassfile(1,eid,adminName);
         return "/Da/unapprovalFileList";
     }
     //查询开发商信息
@@ -202,11 +256,27 @@ public class AdministratorsController {
         return "/Da/developerlist";
     }
     //开发商下线处理
-    @RequestMapping(value = "offline",method = RequestMethod.POST)
+    @RequestMapping(value = "/offline",method = RequestMethod.POST)
     public String offline(@RequestParam("did") String did){
         System.out.println(did);
         administratorsService.offline(did);
         return "/Da/developerlist";
+    }
+    //显示管理员信息
+    @RequestMapping(value = "/admininfo",method = RequestMethod.POST)
+    public String admininfo(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String adminName=(String) session.getAttribute("adminName");
+        System.out.println(adminName);
+        Administrators administrators=new Administrators();
+        administrators=administratorsService.selectAdministratorsByName(adminName);
+        session.setAttribute("administrators",administrators);
+        return "/Da/admininfo";
+    }
+    //发送邮件
+    @RequestMapping(value = "/sendmail", method = RequestMethod.GET)
+    public void sendmail(){
+        administratorsService.sendMail("1051549920@qq.com");
     }
 
 

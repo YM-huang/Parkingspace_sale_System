@@ -753,9 +753,19 @@ div.cs-select span {
 #fh5co-about .fh5co-staff .list-prop3 {
   display: block;
   margin-bottom: 20px;
-  color: #44C662;
+  color: #AAAE7F;
   font-weight: 400; }
 #fh5co-about .fh5co-staff .list-prop4 {
+  display: block;
+  margin-bottom: 20px;
+  color: #44C662;
+  font-weight: 400; }
+#fh5co-about .fh5co-staff .list-prop5 {
+  display: block;
+  margin-bottom: 20px;
+  color: #7a7374;
+  font-weight: 400; }
+#fh5co-about .fh5co-staff .list-prop6 {
   display: block;
   margin-bottom: 20px;
   color: #f07c82;

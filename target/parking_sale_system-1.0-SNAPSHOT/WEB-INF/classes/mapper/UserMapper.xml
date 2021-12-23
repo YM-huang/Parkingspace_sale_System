@@ -28,12 +28,16 @@
         select * from user_login where user_identity = #{userIdentity} and user_password = #{password}
     </select>
 
+    <select id="userAuthentication" resultType="com.bean.User" parameterType="java.util.Map">
+        select * from user_information where user_residential_quarters = #{userResidentialQuarters} and user_building_number = #{userBuildingNumber} and user_house_number = #{userHouseNum}
+    </select>
+
     <update id="updateUserMoney">
         update user_information set money=#{money} where user_identity = #{userName}
     </update>
 
     <update id="updateUserInfo" parameterType="com.bean.User">
-        update user_information set user_identity = #{userIdentity},user_name = #{userName},user_sex = #{userSex},user_phone = #{userPhone},user_residential_quarters = #{userResidentialQuarters},user_building_number = #{userBuildingNumber},user_house_number = #{userHouseNumber} where user_identity = #{userIdentity}
+        update user_information set user_identity = #{userIdentity},user_name = #{userName},user_sex = #{userSex},user_phone = #{userPhone},user_residential_quarters = #{userResidentialQuarters},user_building_number = #{userBuildingNumber},user_floor = #{userFloor},user_house_number = #{userHouseNumber} where user_identity = #{userIdentity}
     </update>
 
 </mapper>

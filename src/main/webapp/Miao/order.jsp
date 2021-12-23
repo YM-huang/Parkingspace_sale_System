@@ -47,6 +47,70 @@
 
     <link rel="stylesheet" href="<%=path%>/Miao/css/style.css">
 
+    <style type="text/css">
+        .black_overlay{
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=88);
+        }
+        .black_overlay1{
+            /*display: none;*/
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=88);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 50%;
+            padding: 20px;
+            border: 1px solid #17e7a4;
+            /*background-color: white;*/
+            z-index:1002;
+            overflow: auto;
+        }
+        .white_content2 {
+            /*display: none;*/
+            position: absolute;
+            top: 10%;
+            left: 35%;
+            width: 30%;
+            height: 10%;
+            padding: 20px;
+            border: 1px solid #17e7a4;
+            /*background-color: white;*/
+            z-index:1002;
+            overflow: auto;
+        }
+        .turnoff {
+            float: left;
+            width: 10%;
+            display: block;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .turnoff:hover {
+            color: #17e7a4;
+        }
+    </style>
 
     <!-- Modernizr JS -->
     <script src="<%=path%>/Miao/js/modernizr-2.6.2.min.js"></script>
@@ -59,6 +123,39 @@
 <body>
 <div id="fh5co-wrapper">
     <div id="fh5co-page">
+
+        <c:if test="${orderFinalState==1}">
+            <div id="fade1" class="black_overlay1"></div>
+            <div id="light1" class="fh5co-feature white_content2" onclick = "document.getElementById('light1').style.display='none';document.getElementById('fade1').style.display='none'">
+
+                <div style="margin-top: 75px;text-align: center">
+                    <i style="font-size: 30px;">余额不足！</i>
+                </div>
+
+            </div>
+        </c:if>
+
+        <c:if test="${orderFinalState==2}">
+            <div id="fade1" class="black_overlay1"></div>
+            <div id="light1" class="fh5co-feature white_content2" onclick = "document.getElementById('light1').style.display='none';document.getElementById('fade1').style.display='none'">
+
+                <div style="margin-top: 75px;text-align: center">
+                    <i style="font-size: 30px;">成功！</i>
+                </div>
+
+            </div>
+        </c:if>
+
+        <c:if test="${orderFinalState==3}">
+            <div id="fade1" class="black_overlay1"></div>
+            <div id="light1" class="fh5co-feature white_content2" onclick = "document.getElementById('light1').style.display='none';document.getElementById('fade1').style.display='none'">
+
+                <div style="margin-top: 75px;text-align: center">
+                    <i style="font-size: 30px;">失败！</i>
+                </div>
+
+            </div>
+        </c:if>
 
         <header id="fh5co-header-section" class="sticky-banner">
             <div class="container">
@@ -118,6 +215,7 @@
         </aside>
 
         <div id="fh5co-about">
+
             <div class="container">
                 <div class="row">
                     <c:forEach items="${orderlist}" var="order" varStatus="status">
@@ -125,10 +223,11 @@
                             <div class="fh5co-staff">
                                 <img class="img-responsive" src="<%=path%>/Miao/images/user-2.jpg" alt=" ">
                                 <c:if test="${order.state==1}"><span class="list-prop1">待处理</span></c:if>
-                                <c:if test="${order.state==2}"><span class="list-prop2">尾款阶段</span></c:if>
-                                <c:if test="${order.state==3}"><span class="list-prop3">交易完成</span></c:if>
-                                <c:if test="${order.state==4}"><span class="list-prop4">交易失败</span></c:if>
-                                <span class="list-prop">Property List: 5</span>
+                                <c:if test="${order.state==2}"><span class="list-prop2">签名阶段</span></c:if>
+                                <c:if test="${order.state==3}"><span class="list-prop3">尾款阶段</span></c:if>
+                                <c:if test="${order.state==4}"><span class="list-prop4">订单完成</span></c:if>
+                                <c:if test="${order.state==5}"><span class="list-prop4">订单取消</span></c:if>
+                                <c:if test="${order.state==6}"><span class="list-prop4">订单超时</span></c:if>
                                 <p>orderID:${order.orderId}</p>
                                 <p>parkingspaceID:${order.parkingSpaceId}</p>
                                 <p>order time:<fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd"/></p>
@@ -141,9 +240,10 @@
                                     <a href="#"><i class="icon-youtube"></i></a>
                                 </p>
                                 <p>
-                                    <a class="btn btn-primary btn-outline" href="#">确认订单</a>
-                                    <c:if test="${order.state==2}"><a class="btn btn-primary btn-outline" href="#">签订合同</a></c:if>
-                                    <a class="btn btn-primary btn-outline" href="#">车位详情</a>
+                                    <c:if test="${order.state==2}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/user/canvasUp?orderid=${order.orderId}">签订合同</a></c:if>
+                                    <a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/user/parkspace?parkid=${order.parkingSpaceId}">车位详情</a>
+                                    <c:if test="${order.state==3}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/administrators/FinishOrder?OrderId=${order.orderId}&userId=${order.contractSignatory}">完成订单</a></c:if>
+                                    <c:if test="${order.state<=3}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/administrators/CancelOrder?OrderId=${order.orderId}">取消订单</a></c:if>
                                 </p>
 
                             </div>

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <% String path = request.getContextPath(); %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,6 +24,16 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 </head>
 <body>
+<%
+    String mess=(String)session.getAttribute("message");
+    if("".equals(mess)  || mess==null){
+
+    }
+    else{%>
+<script type="text/javascript">
+    alert("<%=mess%>");
+</script>
+<% session.setAttribute("message", "");}%>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -235,7 +246,7 @@
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="<%=path%>/developer/select_developerInfo"><i class="fa fa-user fa-fw"></i>公司信息</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
@@ -254,10 +265,10 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
+                    <a href="<%=path%>/Qiang/index.jsp"><i class="fa fa-dashboard"></i>首页</a>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
+                    <a href="ui-elements.html"><i class="fa fa-desktop"></i>车位出售<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="<%=path%>/Qiang/parklist.jsp">销售车位管理</a>
@@ -268,57 +279,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="<%=path%>/Qiang/userlist.jsp"><i class="fa fa-bar-chart-o"></i>业主管理</a>
+                    <a href="<%=path%>/Qiang/activitylist.jsp"><i class="fa fa-bar-chart-o"></i>活动管理</a>
                 </li>
                 <li>
-                    <a class="active-menu" href="#"><i class="fa fa-desktop"></i>订单管理<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="<%=path%>/Qiang/orderlist.jsp">进行订单</a>
-                        </li>
-                        <li>
-                            <a class="active-menu" href="<%=path%>/Qiang/historyorderlsit.jsp">历史订单</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+                    <a href="<%=path%>/Qiang/orderlist.jsp"><i class="fa fa-desktop"></i>订单管理</a>
                 </li>
                 <li>
-                    <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
-                </li>
-
-
-                <li>
-                    <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+                    <a class="active-menu" href="<%=path%>/Qiang/residential.jsp"><i class="fa fa-desktop"></i>小区管理</a>
                 </li>
             </ul>
 
@@ -331,7 +298,27 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-header">
-                        历史订单管理
+                        小区添加
+                    </h1>
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form action="${pageContext.request.contextPath}/developer/add_ResidentialQuarters" method="post">
+                                    <label>小区名称</label>
+                                    <input class="form-control" name="residential_quarters_name">
+                                    <br>
+                                    <label>小区状态</label>
+                                    <input class="form-control" name="residential_quarters_state">
+                                    <br>
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="reset" class="btn btn-default">重置</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <h1 class="page-header">
+                        小区管理
                     </h1>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -339,23 +326,31 @@
                                 <!--    Context Classes  -->
                                 <div class="panel panel-default">
                                     <div class="alert alert-success">
-                                        <strong>订单详情</strong>
+                                        <strong>小区信息</strong>
                                     </div>
                                     <div class="col-xs-12">
-                                        <form>
-                                            <div class="form-group input-group col-xs-12 col-sm-10" style="float: left">
-                                                <input type="text" class="form-control">
+                                        <form action="${pageContext.request.contextPath}/developer/select_ResidentialQuarters" method="post" name="page">
+                                            <div class="form-group input-group col-xs-12 col-sm-8" style="float: left">
+                                                <input type="hidden" id="pageNum" name="pageNum" value="${pageNum}">
+                                                <input type="text" class="form-control" name="search">
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"><i
-                                                            class="fa fa-search"></i>
+                                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i>
                                                     </button>
                                                 </span>
                                             </div>
-                                            <div class="form-group col-xs-12 col-sm-1">
-                                                <button class="btn btn-success">上一页</button>
+                                            <div class="form-group col-xs-12 col-sm-2">
+                                                <select name="pageSize" class="form-control">
+                                                    <option value="${pageSize}" selected hidden>每页${pageSize}条</option>
+                                                    <option value ="5">每页5条</option>
+                                                    <option value ="10">每页10条</option>
+                                                    <option value="20">每页20条</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-xs-12 col-sm-1">
-                                                <button class="btn btn-success">下一页</button>
+                                                <button class="btn btn-success" name="before" onclick="var p = document.getElementById('pageNum'); p.value=Number(p.value)-1;">上一页</button>
+                                            </div>
+                                            <div class="form-group col-xs-12 col-sm-1">
+                                                <button class="btn btn-success" name="after" onclick="var p = document.getElementById('pageNum'); p.value=Number(p.value)+1;">下一页</button>
                                             </div>
                                         </form>
                                     </div>
@@ -365,39 +360,25 @@
                                                 <table class="table">
                                                     <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Username</th>
+                                                        <th>小区编号</th>
+                                                        <th>小区名称</th>
+                                                        <th>小区状态</th>
+                                                        <th>操作</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr class="success">
-                                                        <td>1</td>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>2</td>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>3</td>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>4</td>
-                                                        <td>John</td>
-                                                        <td>Smith</td>
-                                                        <td>@jsmith</td>
-                                                    </tr>
+                                                    <c:forEach items="${ResidentialQuarters_list}" var="ResidentialQuarters" varStatus="status">
+                                                        <tr>
+                                                            <th>${ResidentialQuarters.id}</th>
+                                                            <th>${ResidentialQuarters.residentialQuartersName}</th>
+                                                            <th>${ResidentialQuarters.state}</th>
+                                                            <th><a href="${pageContext.request.contextPath}/developer/update_ResidentialQuarters?residential_quarters_id=${ResidentialQuarters.id}&state=已删除" style="color: red">删除小区</a></th>
+                                                            <th><a href="${pageContext.request.contextPath}/developer/update_ResidentialQuarters?residential_quarters_id=${ResidentialQuarters.id}&state=运营中" style="color: blue">恢复小区</a></th>
+                                                        </tr>
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <div class="center-block">当前第${pageNum}页</div>
                                             </div>
                                         </div>
                                     </div>

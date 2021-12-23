@@ -25,6 +25,7 @@ public interface UserMapper {
 
 
     boolean insertUser(User user);
+
     boolean updateUserMoney(@Param("money") double money,@Param("userName") String userName);
 
     boolean insertUserPassword(User user);
@@ -32,5 +33,7 @@ public interface UserMapper {
     boolean updateUserInfo(User user);
 
     User selectNameById(@Param("userIdentity") String userIdentity);
+
+    User userAuthentication(@Param("userResidentialQuarters") String userResidentialQuarters,@Param("userBuildingNumber") String userBuildingNumber,@Param("userHouseNum") String userHouseNum);
 
 }

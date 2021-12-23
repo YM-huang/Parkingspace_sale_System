@@ -183,7 +183,7 @@ public class DATEST_DAO {
     @Test
     public void selectExamineApprove(){
         System.out.println("dao测试开始。。。。");
-        List<ExamineApprove> list=examineApproveMapper.selectExamineApprove(2,2,"001",1);
+        List<ExamineApprove> list=examineApproveMapper.selectExamineApprove(2,2,3);
         System.out.println(list.get(0).getDeveloperName());
         System.out.println(list.get(1).getDeveloperName());
         System.out.println("dao测试结束。。。。");
@@ -214,7 +214,7 @@ public class DATEST_DAO {
     @Test
     public void updateExamineApproveState(){
         System.out.println("dao测试开始。。。。");
-        if(examineApproveMapper.updateExamineApproveState(1,"001")){
+        if(examineApproveMapper.updateExamineApproveState(1,"001","001")){
             System.out.println("修改成功");
         }
         else{
@@ -252,5 +252,6 @@ public class DATEST_DAO {
         developersMapper.deleteDevelopers("014");
         System.out.println("dao测试结束。。。。");
     }
+
 
 }

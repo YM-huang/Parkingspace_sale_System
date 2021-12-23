@@ -8,6 +8,8 @@ import com.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -36,6 +38,9 @@ public class DAServiceTest {
 
     @Autowired
     private ParkingSpaceService parkingSpaceService;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @Test
     public void selectAdministratorsByName(){
@@ -115,7 +120,20 @@ public class DAServiceTest {
         }
     }
 
-
+    @Test
+    public void senMsg(){
+        SimpleMailMessage message = new SimpleMailMessage();
+        //发件人的邮箱地址
+        message.setFrom("764327916@qq.com");
+        //收件人的邮箱地址
+        message.setTo("1051549920@qq.com");
+        //邮件主题
+        message.setSubject("spring email test!!!!");
+        //邮件内容
+        message.setText("收到的邮件内容：spring email test ！！！");
+        //发送邮件
+        javaMailSender.send(message);
+    }
 
 
 }

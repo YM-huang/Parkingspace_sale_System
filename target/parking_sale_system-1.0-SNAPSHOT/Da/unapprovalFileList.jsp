@@ -22,6 +22,16 @@
 </head>
 
 <body>
+<%
+    String mess=(String)session.getAttribute("message");
+    if("".equals(mess)  || mess==null){
+
+    }
+    else{%>
+<script type="text/javascript">
+    alert("<%=mess%>");
+</script>
+<% session.setAttribute("message", "");}%>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -66,58 +76,11 @@
                 <li>
                     <a href="<%=path%>/Da/developerlist.jsp"><i class="fa fa-desktop"></i> 开发商信息处理</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-bar-chart-o"></i> 客服信息</a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">信息查看</a>
-                        </li>
-                        <li>
-                            <a href="#">信息回复</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-qrcode"></i> 订单处理</a>
-                </li>
+
+
 
                 <li>
                     <a href="admininfo.jsp"><i class="fa fa-table"></i> 个人信息</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit"></i> Forms </a>
-                </li>
-
-
-                <li>
-                    <a href="#"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link</a>
-                        </li>
-                        <li>
-                            <a href="#">Second Level Link<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level Link</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                 </li>
             </ul>
 
@@ -130,7 +93,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-header">
-                        已审批文件
+                        未审批文件
                     </h1>
                     <div class="col-lg-12">
                         <div class="panel panel-default">
@@ -194,13 +157,13 @@
                                                         <th>
                                                             <form action="${pageContext.request.contextPath}/administrators/passfile" method="post" name="page">
                                                                 <input type="hidden" name="eid" value="${examineApprove.id }">
-                                                                <button onclick="fun()">通过</button>
+                                                                <button>通过</button>
                                                             </form>
                                                         </th>
                                                         <th>
                                                             <form action="${pageContext.request.contextPath}/administrators/unpassfile" method="post" name="page">
                                                                 <input type="hidden" name="eid" value="${examineApprove.id }">
-                                                                <button onclick="fun()">不通过</button>
+                                                                <button >不通过</button>
                                                             </form>
                                                         </th>
                                                     </tr>
@@ -217,7 +180,7 @@
                                                                 <div class="modal-body">
 
                                                                     <div style="text-align: center">
-                                                                        <img src="<%=path%>/file/${examineApprove.file}.jpg" alt="申请文件图片" class="img-thumbnail"  style="width:80%;height: 80%;">
+                                                                        <img src="<%=path%>/file/${examineApprove.file}" alt="申请文件图片" class="img-thumbnail"  style="width:80%;height: 80%;">
                                                                     </div>
                                                                     <h2>文件信息</h2>
                                                                 </div>
@@ -286,11 +249,6 @@
     Collect from <a href="http://www.cssmoban.com/"  title="网站模板">模板之家</a>
     <a href="http://cooco.net.cn/" title="组卷网">组卷网</a>
 </div>
-<script>
-    function fun(){
-        alert("操作成功");
-    }
-</script>
 </body>
 
 </html>
