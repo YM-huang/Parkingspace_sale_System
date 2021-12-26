@@ -73,10 +73,11 @@ public class DAServiceTest {
     @Test
     public void insertOrder(){
         System.out.println("service测试开始。。。");
-        String parkingSpaceId="004";
-        String contractSignatory="001";
-        String contractInitiator="001";
-        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator)){
+        String parkingSpaceId="003";
+        String contractSignatory="huangyimiao666@gmail.com";
+        String contractInitiator="1051549920@qq.com";
+        String admin="lihua";
+        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator,admin)){
             System.out.println("插入成功");
         }
     }
@@ -105,7 +106,7 @@ public class DAServiceTest {
     @Test
     public void cancelOrder(){
         System.out.println("service测试开始。。。");
-        if(administratorsService.cancelOrder("001","lihua")){
+        if(administratorsService.cancelOrder("OR1640330018","lihua")){
             System.out.println("订单取消成功");
         }
         else {
@@ -117,6 +118,13 @@ public class DAServiceTest {
         System.out.println("service测试开始。。。");
         if(administratorsService.unseal("014")){
             System.out.println("修改成功");
+        }
+    }
+    @Test
+    public void finishOrder(){
+        System.out.println("service测试开始。。。");
+        if(administratorsService.finishOrder("OR1640329675","lihua")){
+            System.out.println("完成订单成功");
         }
     }
 

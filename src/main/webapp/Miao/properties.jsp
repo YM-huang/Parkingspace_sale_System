@@ -110,10 +110,9 @@
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            <li><a href="agent.html">Agent</a></li>
-                            <li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${userpage}">Properties</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/index.jsp">Home</a></li>
+                            <li  class="active"><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${userpage}">Properties</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/contact.jsp">Contact</a></li>
                             <%
                                 String username=(String)session.getAttribute("username");
                                 if("".equals(username)  || username==null){

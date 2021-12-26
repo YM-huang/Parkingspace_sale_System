@@ -4,7 +4,7 @@ import com.bean.Order;
 import java.util.List;
 
 public interface OrderService {
-    boolean insertOrder(String parkingSpaceId,String contractSignatory,String contractInitiator);
+    boolean insertOrder(String parkingSpaceId,String contractSignatory,String contractInitiator,String AdminName);
 
     List<Order> selectUserOrder(String userIdentity);
 

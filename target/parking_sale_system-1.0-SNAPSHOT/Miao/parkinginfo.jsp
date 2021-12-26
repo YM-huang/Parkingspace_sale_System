@@ -164,10 +164,9 @@
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li class="active"><a href="index.html">Home</a></li>
-                            <li><a href="agent.html">Agent</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/index.jsp">Home</a></li>
                             <li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${userpage}">Properties</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/contact.jsp">Contact</a></li>
                             <%
                                 String username=(String)session.getAttribute("username");
                                 if("".equals(username)  || username==null){
@@ -236,17 +235,7 @@
                 <div class="row">
                     <div class="col-md-12 mb-lg">
                         <figure>
-                            <img src="<%=path%>/Miao/images/img_bg_3.jpg" class="img-responsive" alt="Project Title here">
-                        </figure>
-                    </div>
-                    <div class="col-md-6 mb-lg">
-                        <figure>
-                            <img src="<%=path%>/Miao/images/img_bg_3.jpg" class="img-responsive" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="col-md-6 mb-lg">
-                        <figure>
-                            <img src="<%=path%>/Miao/images/img_bg_3.jpg" class="img-responsive" alt="Image">
+                            <img src="<%=path%>/img/${parkspace.id}.jpg" class="img-responsive" alt="Project Title here">
                         </figure>
                     </div>
                 </div>

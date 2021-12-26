@@ -31,6 +31,8 @@ public class AdministratorsServiceImpl implements AdministratorsService {
     private ParkingSpaceMapper parkingSpaceMapper;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private UserAdminBillMapper userAdminBillMapper;
 
     @Override
     public Administrators selectAdministratorsByName(String administratorsName) {
@@ -105,13 +107,30 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 
         //查询用户信息
         User user = new User();
-        user=userMapper.selectUserByUserName(userName);
+        user=userMapper.selectUserByUserId(userName);
         double userMoney=user.getMoney();
         double moneys=userMoney+deposit;
         //查询后台管理员信息
         Administrators administrators = new Administrators();
         administrators=administratorsMapper.selectAdministratorsByName(administratorsName);
         double adminMoney=administrators.getMoney()-deposit;
+        String adminId=administrators.getAdministratorsId();
+        //生成用户后台管理员账单
+        UserAdminBill userAdminBill=new UserAdminBill();
+        //生成ID号
+        long  timeNew1 =  System.currentTimeMillis()/ 1000; // 10位数的时间戳
+        String UDB="UDB"+timeNew1;
+        userAdminBill.setId(UDB);
+        userAdminBill.setType("退还定金");
+        userAdminBill.setMoney(deposit);
+        userAdminBill.setSnederId(userName);
+        userAdminBill.setReceiverId(adminId);
+        userAdminBill.setOrderId(orderId);
+        Date now = new Date();
+        userAdminBill.setTime(now);
+        if(userAdminBillMapper.insertUserAdminBill(userAdminBill)){
+            System.out.println("用户后台管理员账单插入成功");
+        }
         if(orderMapper.updateOrderState(5,orderId)&&userMapper.updateUserMoney(moneys,userName)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)){
             System.out.println("状态修改成功");
             System.out.println("用户定金退款成功");
@@ -137,6 +156,7 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         double deposit=order.getDeposit();
         double finalPrice=order.getFinalPrice();
         String developerName=order.getContractInitiator();
+        String userName=order.getContractSignatory();
         String pid=order.getParkingSpaceId();
         //修改车位状态
         if(parkingSpaceMapper.updateParkSpaceState(3,pid)){
@@ -148,12 +168,13 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         //处理后台抽成
         Administrators administrators = new Administrators();
         administrators=administratorsMapper.selectAdministratorsByName(administratorsName);
+        String adminId=administrators.getAdministratorsId();
         double adminMoney =administrators.getMoney()-deposit*0.95+finalPrice*0.05;
-        //生成账单信息
+        //生成后台管理员和开发商账单信息
         Date now = new Date();
         AdminDeveloperBill adminDeveloperBill=new AdminDeveloperBill();
         adminDeveloperBill.setReceiverId(developerName);
-        adminDeveloperBill.setSenderId(administratorsName);
+        adminDeveloperBill.setSenderId(adminId);
         adminDeveloperBill.setTime(now);
         adminDeveloperBill.setType("完成订单");
         adminDeveloperBill.setOrderId(orderId);
@@ -162,10 +183,25 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         String ADB="ADB"+timeNew;
         adminDeveloperBill.setId(ADB);
         adminDeveloperBill.setMoney(deposit*0.95+finalPrice*0.95);
+        //生成用户后台账单
+        UserAdminBill userAdminBill=new UserAdminBill();
+        //生成ID号
+        long  timeNew1 =  System.currentTimeMillis()/ 1000; // 10位数的时间戳
+        String UDB="UDB"+timeNew1;
+        userAdminBill.setId(UDB);
+        userAdminBill.setType("提交尾款");
+        userAdminBill.setMoney(finalPrice);
+        userAdminBill.setSnederId(userName);
+        userAdminBill.setReceiverId(adminId);
+        userAdminBill.setOrderId(orderId);
+        userAdminBill.setTime(now);
+        if(userAdminBillMapper.insertUserAdminBill(userAdminBill)){
+            System.out.println("用户后台管理员账单插入成功");
+        }
         if(orderMapper.updateOrderState(4,orderId)&&administratorsMapper.updateAdministratorsMoney(adminMoney,administratorsName)&&adminDeveloperBillMapper.insertAdminDeveloperBill(adminDeveloperBill)){
             System.out.println("状态修改成功");
             System.out.println("后台抽成成功");
-            System.out.println("账单插入成功");
+            System.out.println("后台管理员与开发商账单插入成功");
             return true;
         }
         else {
@@ -257,4 +293,6 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         //System.out.println(developerid);
         applicationContext.publishEvent(new DeveloperRegisterAfterEvent(developerid));
     }
+
+
 }

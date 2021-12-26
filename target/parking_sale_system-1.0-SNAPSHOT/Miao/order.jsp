@@ -165,23 +165,22 @@
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="agent.html">Agent</a></li>
-                            <li class="active"><a href="${pageContext.request.contextPath}/user/userorder?userid=${userid}">Order</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/index.jsp">Home</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/manageparkingSpace?pageNum=${userpage}">Properties</a></li>
+                            <li><a href="${pageContext.request.contextPath}/Miao/contact.jsp">Contact</a></li>
                             <%
                                 String username=(String)session.getAttribute("username");
                                 if("".equals(username)  || username==null){
                                     out.println("<li><a href=\"login.jsp\">登录</a></li>");
                                 }
                                 else{%>
-                            <li><a href="<%=path%>/Miao/personalpage.jsp?username=${username}" class="fh5co-sub-ddown">Hi,${username}!</a>
+                            <li><a href="${pageContext.request.contextPath}/user/personalinfo?userid=${userid}" class="fh5co-sub-ddown">Hi,${username}!</a>
                                 <ul class="fh5co-sub-menu">
-                                    <li><a href="<%=path%>/Miao/personalpage.jsp?username=${username}">个人中心</a></li>
-                                    <li><a href="#">钱包</a></li>
-                                    <li><a href="#">银行卡</a></li>
-                                    <li><a href="#">订单中心</a></li>
-                                    <li><a href="#">1234</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/user/personalinfo?userid=${userid}">个人中心</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/user/bankcard?userid=${userid}">钱包</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/user/bankcard?userid=${userid}">银行卡</a></li>
+                                    <li class="active"><a href="${pageContext.request.contextPath}/user/userorder?userid=${userid}">订单中心</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/user/selectcoupon?userid=${userid}">优惠券</a></li>
                                 </ul>
                             </li>
                             <% session.setAttribute("user", username);}%>

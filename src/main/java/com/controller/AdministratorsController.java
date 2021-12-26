@@ -71,6 +71,7 @@ public class AdministratorsController {
     @RequestMapping(value = "/GenerateOrder")
     public String GenerateOrder(@RequestParam(value = "parkingSpaceId") String parkingSpaceId,@RequestParam(value = "contractSignatory") String contractSignatory,@RequestParam(value = "contractInitiator") String contractInitiator,HttpServletRequest request){
         HttpSession session = request.getSession();
+        String adminName=(String) session.getAttribute("adminName");
         User user = userService.selectNameById(contractSignatory);
         Double usermoney = user.getMoney();
         double money;
@@ -86,8 +87,9 @@ public class AdministratorsController {
             usermoney = usermoney-money;
             userService.updateUserMoney(usermoney,user.getUserIdentity());
         }
-        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator)){
+        if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator,adminName)){
             System.out.println("生成订单成功");
+            System.out.println("用户管理员账单生成成功");
 //            return "Miao/properties";
         }
         else {
@@ -97,7 +99,7 @@ public class AdministratorsController {
         if(parkingSpaceService.updateParkSpaceState(2,parkingSpaceId)){
             System.out.println("车位状态修改成功");
         }
-        String adminName=(String) session.getAttribute("adminName");
+
         if(administratorsService.updateAdministratorsMoney(money,adminName)){
             session.setAttribute("orderstate",2);
             System.out.println("定金入账成功");

@@ -25,6 +25,7 @@ public interface AdministratorsService {
     boolean seal(String dId);
     boolean offline(String dId);
     public void sendMail(String developerid);
+    //boolean insertUserAdminBill(String type,String snederId,String receiverId,double money);
 
 
 

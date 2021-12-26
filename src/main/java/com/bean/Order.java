@@ -2,7 +2,7 @@ package com.bean;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Order implements Serializable{
+public class Order extends Developer_administrator implements Serializable{
     private String orderId;
     private String parkingSpaceId;
     private String contractSignatory;
