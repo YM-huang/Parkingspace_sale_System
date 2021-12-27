@@ -42,6 +42,7 @@ public class AdministratorsController {
                 System.out.println("登陆成功");
                 HttpSession session=request.getSession();
                 session.setAttribute("adminName",adminName);
+                request.getSession().getServletContext().setAttribute("adminName", adminName);
                 model.addAttribute("state","登陆成功");
                 return "Da/index";
             }
@@ -71,7 +72,10 @@ public class AdministratorsController {
     @RequestMapping(value = "/GenerateOrder")
     public String GenerateOrder(@RequestParam(value = "parkingSpaceId") String parkingSpaceId,@RequestParam(value = "contractSignatory") String contractSignatory,@RequestParam(value = "contractInitiator") String contractInitiator,HttpServletRequest request){
         HttpSession session = request.getSession();
-        String adminName=(String) session.getAttribute("adminName");
+
+        String adminName= (String)request.getSession().getServletContext().getAttribute("adminName");
+
+        System.out.println(adminName);
         User user = userService.selectNameById(contractSignatory);
         Double usermoney = user.getMoney();
         double money;
@@ -85,6 +89,7 @@ public class AdministratorsController {
         }
         else{
             usermoney = usermoney-money;
+            System.out.println(usermoney);
             userService.updateUserMoney(usermoney,user.getUserIdentity());
         }
         if(orderService.insertOrder(parkingSpaceId,contractSignatory,contractInitiator,adminName)){
@@ -113,15 +118,20 @@ public class AdministratorsController {
 
     }
     //取消订单
-    @RequestMapping(value = "/CancelOrder",method = RequestMethod.POST)
-    public void CancelOrder(@RequestParam(value = "OrderId") String orderId,HttpServletRequest request){
+    @RequestMapping(value = "/CancelOrder",method = RequestMethod.GET)
+    public String CancelOrder(@RequestParam(value = "OrderId") String orderId,HttpServletRequest request){
         HttpSession session = request.getSession();
-        String adminName=(String) session.getAttribute("adminName");
-        if(administratorsService.cancelOrder("orderId",adminName)){
+        System.out.println("OrderId:"+orderId);
+        String adminName= (String)request.getSession().getServletContext().getAttribute("adminName");
+        if(administratorsService.cancelOrder(orderId,adminName)){
             System.out.println("订单取消成功");
+            session.setAttribute("orderFinalState",2);
+            return "Miao/order";
         }
         else {
             System.out.println("订单取消失败");
+            session.setAttribute("orderFinalState",3);
+            return "Miao/order";
         }
 
     }
@@ -129,7 +139,7 @@ public class AdministratorsController {
     @RequestMapping(value = "/FinishOrder")
     public String FinishOrder(@RequestParam(value = "OrderId") String orderId,@RequestParam(value = "userId") String userId,HttpServletRequest request){
         HttpSession session = request.getSession();
-        String adminName=(String) session.getAttribute("adminName");
+        String adminName= (String)request.getSession().getServletContext().getAttribute("adminName");
         User user = userService.selectNameById(userId);
         Double usermoney = user.getMoney();
         Order order=orderService.selectOrderById(orderId);
@@ -145,12 +155,12 @@ public class AdministratorsController {
         }
         if(administratorsService.finishOrder(orderId,adminName)){
             System.out.println("订单完成");
-            session.setAttribute("orderFinalState",1);
+            session.setAttribute("orderFinalState",2);
             return "Miao/order";
         }
         else {
-            System.out.println("订单完成");
-            session.setAttribute("orderFinalState",1);
+            System.out.println("订单完成失败");
+            session.setAttribute("orderFinalState",3);
             return "Miao/order";
         }
     }

@@ -220,7 +220,7 @@
                     <c:forEach items="${orderlist}" var="order" varStatus="status">
                         <div class="col-sm-6 text-center animate-box" data-animate-effect="fadeIn">
                             <div class="fh5co-staff">
-                                <img class="img-responsive" src="<%=path%>/Miao/images/user-2.jpg" alt=" ">
+                                <img class="img-responsive" src="<%=path%>/img/${order.parkingSpaceId}.jpg" alt=" ">
                                 <c:if test="${order.state==1}"><span class="list-prop1">待处理</span></c:if>
                                 <c:if test="${order.state==2}"><span class="list-prop2">签名阶段</span></c:if>
                                 <c:if test="${order.state==3}"><span class="list-prop3">尾款阶段</span></c:if>
@@ -229,6 +229,7 @@
                                 <c:if test="${order.state==6}"><span class="list-prop4">订单超时</span></c:if>
                                 <p>orderID:${order.orderId}</p>
                                 <p>parkingspaceID:${order.parkingSpaceId}</p>
+                                <p>finalPrice:${order.finalPrice}</p>
                                 <p>order time:<fmt:formatDate value="${order.orderTime}" pattern="yyyy/MM/dd"/></p>
                                 <p>generated time:<fmt:formatDate value="${order.finalPaymentTime}" pattern="yyyy/MM/dd"/></p>
                                 <p class="fh5co-social-icons">
@@ -239,13 +240,57 @@
                                     <a href="#"><i class="icon-youtube"></i></a>
                                 </p>
                                 <p>
+                                    <c:if test="${order.state==2}"><a class="btn btn-primary btn-outline" data-toggle="modal" data-target="#${order.orderId}">查看合同</a></c:if>
                                     <c:if test="${order.state==2}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/user/canvasUp?orderid=${order.orderId}">签订合同</a></c:if>
+                                    <c:if test="${order.state==4||order.state==3}"><a class="btn btn-primary btn-outline" data-toggle="modal" data-target="#${order.orderId}">查看合同及签名</a></c:if>
                                     <a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/user/parkspace?parkid=${order.parkingSpaceId}">车位详情</a>
                                     <c:if test="${order.state==3}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/administrators/FinishOrder?OrderId=${order.orderId}&userId=${order.contractSignatory}">完成订单</a></c:if>
                                     <c:if test="${order.state<=3}"><a class="btn btn-primary btn-outline" href="${pageContext.request.contextPath}/administrators/CancelOrder?OrderId=${order.orderId}">取消订单</a></c:if>
                                 </p>
 
                             </div>
+                        </div>
+                        <div class="modal fade" id="${order.orderId}" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">&times;
+                                        </button>
+                                        <h4 class="modal-title">合同详情</h4>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12" style="text-align: center">
+                                            <h4>合同：</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div style="text-align: center">
+                                            <img src="<%=path%>/contract/${order.orderId}.jpg" alt="合同图片" class="img-thumbnail"  style="width:80%;height: 80%;">
+                                        </div>
+                                    </div>
+                                    <c:if test="${order.state==4||order.state==3}">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12 col-xs-12" style="text-align: center">
+                                            <h4>签名：</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div style="text-align: center">
+                                            <img src="<%=path%>/sign/${order.orderId}.jpg" alt="签名图片" class="img-thumbnail"  style="width:80%;height: 80%;">
+                                        </div>
+                                    </div>
+                                    </c:if>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">关闭
+                                        </button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
                         </div>
                     </c:forEach>
                 </div>

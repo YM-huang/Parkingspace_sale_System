@@ -37,5 +37,7 @@ public interface UserService {
 
     User userAuthentication(String userResidentialQuarters,String userBuildingNumber,String userHouseNum);
 
+    boolean updateOrderState(int state,String orderId);
+
 
 }

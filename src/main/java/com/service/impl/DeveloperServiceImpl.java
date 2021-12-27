@@ -101,7 +101,7 @@ public class DeveloperServiceImpl implements DeveloperService {
                     price=price-activity.getActivityDiscount()*del;
                 }
             }
-            order.setFinalPrice(price);
+            order.setFinalPrice(price-order.getDeposit());
         }
         else{
 //            传过来的价格不为空则按照传过来的价格计算

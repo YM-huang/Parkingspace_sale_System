@@ -380,7 +380,8 @@
                                                                 </div>
                                                             </div><!-- /.modal-content -->
                                                         </div><!-- /.modal -->
-                                                        </c:forEach>
+                                                    </div>
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
                                                 <div class="center-block">当前第${pageNum}页</div>

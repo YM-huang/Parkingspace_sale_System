@@ -170,6 +170,14 @@ public class AdministratorsServiceImpl implements AdministratorsService {
         administrators=administratorsMapper.selectAdministratorsByName(administratorsName);
         String adminId=administrators.getAdministratorsId();
         double adminMoney =administrators.getMoney()-deposit*0.95+finalPrice*0.05;
+        double developerMoney=deposit*0.95+finalPrice*0.95;
+        double dMoney=developersMapper.selectMoney(developerName);
+        double summoney=dMoney+developerMoney;
+        //给开发商转钱
+        if(developersMapper.updateMoney(developerName,summoney)){
+            System.out.println(developerMoney);
+            System.out.println("给开发商转钱成功");
+        }
         //生成后台管理员和开发商账单信息
         Date now = new Date();
         AdminDeveloperBill adminDeveloperBill=new AdminDeveloperBill();

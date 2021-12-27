@@ -13,4 +13,5 @@ public interface DevelopersMapper {
     boolean deleteDevelopers(@Param("id") String id);
     String selectState(@Param("id") String id);
     Developers selectDeveloper(@Param("developerId") String developerId);
+    boolean updateMoney(@Param("did") String did,@Param("money") double money);
 }

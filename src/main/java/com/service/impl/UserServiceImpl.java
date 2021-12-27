@@ -3,6 +3,7 @@ package com.service.impl;
 import com.bean.ParkingSpace;
 import com.bean.ResidentialQuarters;
 import com.bean.User;
+import com.dao.OrderMapper;
 import com.dao.ParkingSpaceMapper;
 import com.dao.ResidentialQuartersMapper;
 import com.dao.UserMapper;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private ParkingSpaceMapper parkingSpaceMapper;
     @Autowired
     private ResidentialQuartersMapper residentialQuartersMapper;
+    @Autowired
+    private OrderMapper orderMapper;
 
 
     @Override
@@ -82,7 +85,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResidentialQuarters selectResidentialQuartersById(String did){return residentialQuartersMapper.selectResidentialQuartersById(did);};
 
-
+    @Override
+    public boolean updateOrderState(int state,String orderId){return orderMapper.updateOrderState(state,orderId);};
 
 
 }

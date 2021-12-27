@@ -25,4 +25,7 @@
     <select id="selectDeveloper" resultType="com.bean.Developers">
         select * from developer where `developer_id` = #{developerId}
     </select>
+    <update id="updateMoney">
+        update developer set money=#{money} where developer_id=#{did};
+    </update>
 </mapper>

@@ -106,7 +106,7 @@ public class DAServiceTest {
     @Test
     public void cancelOrder(){
         System.out.println("service测试开始。。。");
-        if(administratorsService.cancelOrder("OR1640330018","lihua")){
+        if(administratorsService.cancelOrder("OR1640443917","lihua")){
             System.out.println("订单取消成功");
         }
         else {

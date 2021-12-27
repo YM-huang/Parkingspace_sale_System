@@ -456,6 +456,7 @@ public class UserController {
         }
         boolean flag = GenerateImage(str, path+"/"+orderId+".png");
         if(flag){
+            userService.updateOrderState(3,orderId);
             session.setAttribute("orderFinalState",2);
             return "Miao/order";
         }

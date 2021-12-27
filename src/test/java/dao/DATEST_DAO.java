@@ -252,6 +252,12 @@ public class DATEST_DAO {
         developersMapper.deleteDevelopers("014");
         System.out.println("dao测试结束。。。。");
     }
+    //给开发商充钱
+    @Test
+    public void updateMoney(){
+        System.out.println("dao测试开始。。。。");
+        developersMapper.updateMoney("1015678266@qq.com",200);
+    }
 
 
 }

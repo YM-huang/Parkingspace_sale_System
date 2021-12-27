@@ -233,9 +233,9 @@
                 </div>
                 <!-- END .row -->
                 <div class="row">
-                    <div class="col-md-12 mb-lg">
+                    <div class="col-md-12 mb-lg" >
                         <figure>
-                            <img src="<%=path%>/img/${parkspace.id}.jpg" class="img-responsive" alt="Project Title here">
+                            <img src="<%=path%>/img/${parkspace.id}.jpg" class="img-responsive" alt="Project Title here" style="text-align: center">
                         </figure>
                     </div>
                 </div>
