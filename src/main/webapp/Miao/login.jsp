@@ -13,7 +13,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>用户登陆注册</title>
+    <title>线上车位代理销售商城系统-用户登陆注册</title>
     <link href="<%=path%>/Miao/css2/style2.css" rel="stylesheet">
     <style type="text/css">
         .input_radio{

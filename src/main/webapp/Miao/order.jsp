@@ -20,7 +20,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>orderlist</title>
+    <title>线上车位代理销售商城系统-orderlist</title>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">
@@ -161,7 +161,7 @@
             <div class="container">
                 <div class="nav-header">
                     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
-                    <h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>Parking Space</a></h1>
+                    <h1 id="fh5co-logo"><a href="index.html"><i class="icon-home"></i>线上车位代理销售商城系统</a></h1>
                     <!-- START #fh5co-menu-wrap -->
                     <nav id="fh5co-menu-wrap" role="navigation">
                         <ul class="sf-menu" id="fh5co-primary-menu">

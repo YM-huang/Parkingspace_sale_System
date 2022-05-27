@@ -348,7 +348,7 @@ public class UserController {
     }
 
     /**
-     * 添加银行卡的控制层
+     * 查询优惠券控制层
      *
      * @param userid
      * @return
