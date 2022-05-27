@@ -1,1 +1,30 @@
-###parkingsale System in construction
+# 在线车位销售系统
+
+#### 介绍
+模拟淘宝模式下的在线车位销售方式。平台会收5%的佣金，开发商入驻需要审批。
+
+#### 软件架构
+本软件主要采用spring，springMVC和mybatis进行编写。数据库采用mysql。复用需要有一定的能力，谨慎copy。
+
+#### 安装教程
+
+1.  git clone到idea项目中。
+2.  导入mysql数据库相关配置
+3.  配置tomcat，开发用的是9.0.45
+之后启动即可
+
+#### 使用说明
+
+1.  Qiang文件夹下是开发商的相关页面
+2.  Da文件夹下是平台的相关页面
+3.  Miao文件夹下是用户的相关页面
+
+
+#### 特技
+
+1.  开发商可以添加商品车位
+2.  用户可以进行浏览
+3.  购买时，用户需要支付10%的定金，然后开发商进行合同的上传，用户看完合同后需要线上签字上传签字图片，然后支付尾款，订单完成
+
+gitee地址：https://gitee.com/zjut_-parkingsale_-system/parking_sale_system
+
