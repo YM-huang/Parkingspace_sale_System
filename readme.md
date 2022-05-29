@@ -26,5 +26,3 @@
 2.  用户可以进行浏览
 3.  购买时，用户需要支付10%的定金，然后开发商进行合同的上传，用户看完合同后需要线上签字上传签字图片，然后支付尾款，订单完成
 
-gitee地址：https://gitee.com/zjut_-parkingsale_-system/parking_sale_system
-
